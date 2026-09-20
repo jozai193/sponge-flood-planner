@@ -7,15 +7,25 @@ test('storm arrival and intervention placement use purposeful motion',async({pag
  await expect(opening).toContainText('Two futures.');
  await expect(opening).toContainText('Built for any neighbourhood');
  await expect(opening).not.toContainText('Spring Garden');
+ await expect(page.getByRole('img',{name:/same rainy city street/i})).toBeVisible();
+ await expect(page.locator('.launch-photo-conventional')).toHaveCSS('background-image',/launch-city-conventional\.webp/);
+ await expect(page.locator('.launch-photo-permeable')).toHaveCSS('background-image',/launch-city-permeable\.webp/);
  await expect(page.locator('.launch-flood')).toBeVisible();
  await expect(page.locator('.launch-permeable')).toBeVisible();
  await expect(page.locator('.launch-comparison')).toContainText('Runoff accumulates');
  await expect(page.locator('.launch-comparison')).toContainText('Permeable + planted');
+ const divider=page.getByRole('separator',{name:'Before and after comparison divider'});
+ await expect(divider).toHaveAttribute('aria-valuenow','52');
+ await divider.press('ArrowRight');
+ await expect(divider).toHaveAttribute('aria-valuenow','54');
+ await page.getByRole('button',{name:'downpour'}).click();
+ await expect(opening).toHaveAttribute('data-rain','downpour');
+ await expect(page.getByRole('button',{name:'downpour'})).toHaveAttribute('aria-pressed','true');
  await expect(page.getByRole('button',{name:'Take the guided tour'})).toBeVisible();
  await page.waitForTimeout(7200);
  await expect(opening).toBeVisible();
  await page.screenshot({path:'output/playwright/storm-intro-polish.png'});
- await page.evaluate(()=>document.querySelector<HTMLButtonElement>('.launch-experience button')?.click());
+ await page.getByRole('button',{name:'Enter the live model'}).click();
  await expect(opening).toBeHidden({timeout:5000});
  await expect(page.getByRole('button',{name:'Run storm',exact:true})).toBeEnabled({timeout:30000});
  await page.getByLabel('Intervention').selectOption('bioswale');
@@ -42,8 +52,9 @@ test('reduced-motion preference removes decorative storm animation',async({page}
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.goto('/?intro=1');
  await expect(page.locator('.launch-experience')).toBeVisible({timeout:30000});
- await expect(page.locator('.launch-rain')).toHaveCSS('display','none');
- await page.evaluate(()=>document.querySelector<HTMLButtonElement>('.launch-experience button')?.click());
+ await expect(page.locator('.launch-rain-canvas')).toHaveAttribute('data-motion','reduced');
+ await expect(page.locator('.launch-lightning')).toHaveCSS('display','none');
+ await page.getByRole('button',{name:'Enter the live model'}).click();
 });
 
 test('opening remains composed on a narrow screen',async({page})=>{
