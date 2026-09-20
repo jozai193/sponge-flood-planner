@@ -151,13 +151,15 @@ export default function LaunchExperience({exiting,onEnter,onTour}:Props){
     <div className="launch-lightning" aria-hidden="true"/>
     <RainCanvas intensity={intensity}/>
 
-    <div
-      className="launch-photo-world"
-      role="img"
-      aria-label="The same rainy city street compared in two states: shallow flooding over conventional pavement and reduced pooling beside semi-permeable pavers"
-    >
-      <div className="launch-photo-panel launch-photo-conventional"/>
-      <div className="launch-photo-panel launch-photo-permeable"/>
+    <div className="launch-photo-world" role="group" aria-label="Two-image rainy street comparison">
+      <figure className="launch-photo-panel launch-photo-conventional">
+        <img src="/media/launch-city-conventional.webp" alt="Conventional city street with shallow floodwater pooling over asphalt and concrete"/>
+        <figcaption><b>Conventional surface</b><span>Water runs off and pools</span></figcaption>
+      </figure>
+      <figure className="launch-photo-panel launch-photo-permeable">
+        <img src="/media/launch-city-permeable.webp" alt="The matching city street with semi-permeable pavers, planted drainage, and reduced pooling"/>
+        <figcaption><b>Semi-permeable surface</b><span>Water filters through the edge</span></figcaption>
+      </figure>
     </div>
     <div className="launch-surface-animation" aria-hidden="true">
       <div className="launch-runoff-motion"><i/><i/><i/></div>

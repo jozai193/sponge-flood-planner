@@ -7,9 +7,11 @@ test('storm arrival and intervention placement use purposeful motion',async({pag
  await expect(opening).toContainText('Two futures.');
  await expect(opening).toContainText('Built for any neighbourhood');
  await expect(opening).not.toContainText('Spring Garden');
- await expect(page.getByRole('img',{name:/same rainy city street/i})).toBeVisible();
- await expect(page.locator('.launch-photo-conventional')).toHaveCSS('background-image',/launch-city-conventional\.webp/);
- await expect(page.locator('.launch-photo-permeable')).toHaveCSS('background-image',/launch-city-permeable\.webp/);
+ await expect(page.getByRole('group',{name:'Two-image rainy street comparison'})).toBeVisible();
+ await expect(page.getByRole('img',{name:/conventional city street/i})).toBeVisible();
+ await expect(page.getByRole('img',{name:/matching city street/i})).toBeVisible();
+ await expect(page.locator('.launch-photo-conventional')).toContainText('Water runs off and pools');
+ await expect(page.locator('.launch-photo-permeable')).toContainText('Water filters through the edge');
  await expect(page.locator('.launch-flood')).toBeVisible();
  await expect(page.locator('.launch-permeable')).toBeVisible();
  await expect(page.locator('.launch-comparison')).toContainText('Runoff accumulates');
