@@ -3,8 +3,14 @@ import {test,expect} from '@playwright/test';
 test('storm arrival and intervention placement use purposeful motion',async({page})=>{
  await page.goto('/?intro=1');
  const opening=page.locator('.launch-experience');
- await expect(opening).toContainText('See the storm.',{timeout:30000});
- await expect(opening).toContainText('Shape the response.');
+ await expect(opening).toContainText('One storm.',{timeout:30000});
+ await expect(opening).toContainText('Two futures.');
+ await expect(opening).toContainText('Built for any neighbourhood');
+ await expect(opening).not.toContainText('Spring Garden');
+ await expect(page.locator('.launch-flood')).toBeVisible();
+ await expect(page.locator('.launch-permeable')).toBeVisible();
+ await expect(page.locator('.launch-comparison')).toContainText('Runoff accumulates');
+ await expect(page.locator('.launch-comparison')).toContainText('Permeable + planted');
  await expect(page.getByRole('button',{name:'Take the guided tour'})).toBeVisible();
  await page.waitForTimeout(7200);
  await expect(opening).toBeVisible();
@@ -44,7 +50,8 @@ test('opening remains composed on a narrow screen',async({page})=>{
  await page.setViewportSize({width:390,height:844});
  await page.goto('/?intro=1');
  const opening=page.locator('.launch-experience');
- await expect(opening).toContainText('Shape the response.',{timeout:30000});
+ await expect(opening).toContainText('Two futures.',{timeout:30000});
+ await expect(opening).not.toContainText('Spring Garden');
  await expect(page.getByRole('button',{name:'Enter the live model'})).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true);
  await page.waitForTimeout(1500);

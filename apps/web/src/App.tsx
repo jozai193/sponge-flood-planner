@@ -1280,7 +1280,7 @@ export default function App() {
 
   return (
     <>
-    {launch.visible&&<LaunchExperience key={launch.run} exiting={launch.exiting} location={bundle?.label??'Spring Garden, Philadelphia'} onEnter={closeLaunch} onTour={()=>{closeLaunch();window.setTimeout(()=>setShowJudgeTour(true),780);}}/>}
+    {launch.visible&&<LaunchExperience key={launch.run} exiting={launch.exiting} onEnter={closeLaunch} onTour={()=>{closeLaunch();window.setTimeout(()=>setShowJudgeTour(true),780);}}/>}
     <div className={`app ${launch.visible?'is-launching':''}`} aria-hidden={launch.visible||undefined} inert={launch.visible||undefined}>
       <header>
         <div className="brand">
