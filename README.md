@@ -4,7 +4,7 @@ SPONGE is a deployable neighbourhood stormwater screening application. It combin
 
 The software is release-engineered for an **exploratory screening** use case. It is not a calibrated flood forecast, an engineering design, or a substitute for surveyed drainage, parcel eligibility, observed-event validation, or professional review.
 
-**Public judge demo:** https://52.87.104.31.sslip.io/?tour=1
+**Public judge demo:** https://alt-lay-executed-casual.trycloudflare.com/?tour=1
 
 ## Run locally
 
@@ -47,9 +47,9 @@ pnpm smoke:production
 
 The default published port is restricted to `127.0.0.1:8080`; put an HTTPS reverse proxy in front of it for internet access. See [production deployment](docs/production-deployment.md) for backups, host/origin configuration, health checks and the remaining scientific limits.
 
-The current short-lived judge deployment uses a static Elastic IP, automatic HTTPS,
-an encrypted 30 GB volume, and a `t3.small` host with 4 GB of swap. Deployment and
-removal instructions are in [AWS judge deployment](docs/aws-judge-deployment.md).
+The verified judge route currently fronts the isolated production stack with HTTPS.
+An AWS reference deployment with a static Elastic IP, encrypted storage, and automatic
+TLS is documented in [AWS judge deployment](docs/aws-judge-deployment.md).
 
 ## Verified release functionality
 
