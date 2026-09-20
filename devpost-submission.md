@@ -88,7 +88,7 @@ Open `http://127.0.0.1:5173` and follow the prepared-demo path. The README inclu
 
 ## Public Demo Link
 
-HTTPS judge tour: https://susan-absorption-sand-implied.trycloudflare.com/?tour=1
+HTTPS judge tour: https://alt-lay-executed-casual.trycloudflare.com/?tour=1
 
 This temporary HTTPS tunnel serves the isolated production stack and passed a fresh external-browser check with zero console errors. It has no uptime guarantee and remains available only while the local production stack and tunnel connector stay online.
 
@@ -98,7 +98,9 @@ https://github.com/jozai193/sponge-flood-planner
 
 ## Demo Video
 
-Final narrated video prepared locally: `output/video/SPONGE-NextStep-demo.mp4` (4:53, H.264/AAC, 1440×900). It uses the current dark UI and Deepgram Aura-2 Orion narration. **TODO before final Devpost submission:** upload it and insert the public YouTube URL.
+Public demo video: https://youtu.be/SwiVCAZlYHg
+
+The uploaded 4:53 H.264/AAC, 1440×900 walkthrough uses the current dark UI and Deepgram Aura-2 Orion narration. The final local file is `output/submission/SPONGE-NextStep-demo.mp4`.
 
 ## Screenshot Shot List
 
@@ -114,7 +116,9 @@ Final narrated video prepared locally: `output/video/SPONGE-NextStep-demo.mp4` (
 
 - Application, production stack, immutable demo data, tests, documentation, screenshots, and a final narrated 4:53 demonstration exist locally.
 - The public GitHub repository and externally verified HTTPS judge preview are live.
-- Video upload, thumbnail/gallery upload, Devpost synchronization, eligibility confirmation, and the explicit final-submit confirmation remain entrant actions.
+- The video, custom project thumbnail, public links, story, technology tags, team details, and eligibility details are synchronized to the Devpost project.
+- The image gallery is optional and intentionally omitted; the embedded video and custom thumbnail provide the primary visual evidence.
+- Devpost records the project as published and submitted to NextStep Hacks 2026.
 - Numerical and software verification do not establish calibrated neighbourhood flood accuracy.
 
 ## Known Limitations
@@ -132,6 +136,6 @@ SPONGE began during the NextStep Hacks build period. Product architecture and pl
 
 The project was built by Aditya Jevoor with Codex as an AI engineering collaborator. Codex assisted with planning, implementation, debugging, auditing, testing, and documentation; the entrant directed product decisions and accepts responsibility for the submitted work and claims.
 
-## TODO Official Form Fields
+## Official Form Status
 
-The live NextStep Hacks submission form currently exposes no custom questions. Final Devpost fields still require the video URL, project thumbnail/gallery choices, and a last review of team and eligibility details.
+The live NextStep Hacks submission form exposes no custom questions. Devpost records the project as published and submitted to NextStep Hacks 2026.

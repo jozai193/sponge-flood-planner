@@ -84,4 +84,4 @@ The project was built by Aditya Jevoor with Codex as an AI engineering collabora
 Prepared links:
 
 - repository: https://github.com/jozai193/sponge-flood-planner
-- judge tour: https://susan-absorption-sand-implied.trycloudflare.com/?tour=1
+- judge tour: https://alt-lay-executed-casual.trycloudflare.com/?tour=1

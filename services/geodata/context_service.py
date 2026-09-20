@@ -8,6 +8,7 @@ import time
 from pathlib import Path
 
 _SLOTS = threading.BoundedSemaphore(2)
+_CREATE_NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 
 def bounded_context(manifest, *, timeout_s=35):
     if not _SLOTS.acquire(blocking=False):
@@ -23,7 +24,7 @@ def bounded_context(manifest, *, timeout_s=35):
             process = subprocess.Popen(
                 [getattr(sys, '_base_executable', sys.executable), '-c', bootstrap, str(request), str(response)],
                 stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                creationflags=subprocess.CREATE_NO_WINDOW if sys.platform=='win32' else 0,
+                creationflags=_CREATE_NO_WINDOW if sys.platform == 'win32' else 0,
             )
             try:
                 deadline=time.monotonic()+timeout_s
