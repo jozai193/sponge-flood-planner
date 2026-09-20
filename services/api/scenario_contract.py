@@ -125,10 +125,10 @@ class ScenarioSpecV2(StrictWire):
             b = f.coastal
             if len(b.cells) != len(set(b.cells)):
                 raise ValueError('Duplicate coastal cells')
-            for i in b.cells:
-                x,y = i%d.nx,i//d.nx
+            for cell in b.cells:
+                x,y = cell%d.nx,cell//d.nx
                 edge = {'west':x==0,'east':x==d.nx-1,'south':y==0,'north':y==d.ny-1}[b.edge]
-                if not 0 <= i < n or not edge:
+                if not 0 <= cell < n or not edge:
                     raise ValueError('Invalid coastal boundary cell')
             if b.levels[0].timeS != 0 or any(a.timeS >= z.timeS for a,z in zip(b.levels,b.levels[1:])):
                 raise ValueError('Invalid coastal level series')

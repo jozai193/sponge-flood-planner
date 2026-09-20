@@ -5,6 +5,7 @@ Coordinates and the time axis are metadata; flood levels remain sealed.
 """
 import hashlib
 from pathlib import Path
+from typing import Any
 
 import h5py
 import numpy as np
@@ -38,7 +39,7 @@ def plain(value):
 def metadata_only(path: Path) -> dict:
     path = Path(path)
     with h5py.File(path, 'r') as data:
-        result = {'file': path.name, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+        result: dict[str, Any] = {'file': path.name, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
                       'global_attributes': {k: plain(data.attrs[k]) for k in GLOBAL_FIELDS if k in data.attrs},
                       'variables': {k: {a: plain(data[k].attrs[a]) for a in VARIABLE_FIELDS
                                      if a in data[k].attrs} for k in VARIABLES if k in data},

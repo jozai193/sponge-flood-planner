@@ -46,17 +46,7 @@ target-version = "py312"
 
 [tool.mypy]
 python_version = "3.12"
-files = [
-  "services/api/body_limit.py",
-  "services/api/client_identity.py",
-  "services/api/database.py",
-  "services/api/jobs.py",
-  "services/api/main.py",
-  "services/api/queueing.py",
-  "services/api/retention.py",
-  "services/api/settings.py",
-  "services/reference/process_runner.py",
-]
+files = ["services"]
 follow_imports = "skip"
 check_untyped_defs = true
 no_implicit_optional = true

@@ -7,6 +7,7 @@ import secrets
 import shutil
 import time
 from datetime import UTC, datetime, timedelta
+from typing import Literal
 from uuid import uuid4
 
 from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, Query, Request, UploadFile
@@ -369,7 +370,7 @@ def get_noaa_design_storm(
     bundle_id: str,
     duration_minutes: int = Query(60),
     return_period_years: int = Query(100),
-    distribution: str = Query("centered"),
+    distribution: Literal["uniform", "centered", "front_loaded", "rear_loaded"] = Query("centered"),
     antecedent_saturation: float = Query(0.25, ge=0, le=1),
     session_id=Depends(identity),
 ):

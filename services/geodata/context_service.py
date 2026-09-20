@@ -21,7 +21,7 @@ def bounded_context(manifest, *, timeout_s=35):
             # owned process handle is the process doing native acquisition.
             bootstrap = 'import sys,runpy; sys.path[:]=' + repr(sys.path) + '; runpy.run_module("services.geodata.context_worker",run_name="__main__")'
             process = subprocess.Popen(
-                [sys._base_executable, '-c', bootstrap, str(request), str(response)],
+                [getattr(sys, '_base_executable', sys.executable), '-c', bootstrap, str(request), str(response)],
                 stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                 creationflags=subprocess.CREATE_NO_WINDOW if sys.platform=='win32' else 0,
             )

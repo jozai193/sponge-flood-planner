@@ -10,6 +10,11 @@ from services.reference.momentum_diagnostic import MomentumDiagnosticSolver
 
 
 class BoundaryRecordingHLL(MomentumDiagnosticSolver):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.open_rows = np.array([], dtype=int)
+        self.recorded_rhs_faces: list[np.ndarray] = []
+
     def rhs(self, state, boundary_time=None):
         result = super().rhs(state, boundary_time)
         self.recorded_rhs_faces.append(self.current_boundary_faces.copy())

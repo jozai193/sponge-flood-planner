@@ -105,7 +105,8 @@ def buildings(bounds):
     provider = select_provider('buildings', bounds)
     west,south,east,north=bounds
     if provider.id == 'philadelphia_buildings':
-        features, sources = [], []
+        features: list[dict] = []
+        sources: list[dict] = []
         for offset in range(0, 10000, 1000):
             raw, source = fetch(PHILLY_BUILDINGS, {"f":"geojson","where":"1=1",
                 "geometry":f"{west},{south},{east},{north}","geometryType":"esriGeometryEnvelope",

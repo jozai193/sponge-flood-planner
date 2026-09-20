@@ -31,28 +31,28 @@ def build_graph(bed, solid, factor, dx=1., dy=1.):
             or any(n%factor for n in z.shape) or not np.isfinite([dx,dy]).all()
             or min(dx,dy)<=0):
         raise ValueError('Invalid fine terrain or grouping')
-    ny,nx=z.shape;labels=np.full(z.shape,-1,dtype=int);regions=[]
+    ny,nx=z.shape;labels=np.full(z.shape,-1,dtype=int);regions: list[np.ndarray] = []
     for r0 in range(0,ny,factor):
         for c0 in range(0,nx,factor):
             for r in range(r0,r0+factor):
                 for c in range(c0,c0+factor):
                     if wall[r,c] or labels[r,c]>=0:continue
-                    label=len(regions);cells=[];queue=deque([(r,c)]);labels[r,c]=label
+                    label=len(regions);cells: list[tuple[int, int]] = [];queue: deque[tuple[int, int]] = deque([(r,c)]);labels[r,c]=label
                     while queue:
                         rr,cc=queue.popleft();cells.append((rr,cc))
                         for a,b in ((rr-1,cc),(rr+1,cc),(rr,cc-1),(rr,cc+1)):
                             if r0<=a<r0+factor and c0<=b<c0+factor and not wall[a,b] and labels[a,b]<0:
                                 labels[a,b]=label;queue.append((a,b))
-                    regions.append(np.asarray(cells))
+                    region=np.asarray(cells);regions.append(region)
     if not regions:raise ValueError('No open compartments')
     beds=[];areas=[];centers=[]
-    for cells in regions:
-        values=z[cells[:,0],cells[:,1]]
+    for region_cells in regions:
+        values=z[region_cells[:,0],region_cells[:,1]]
         if np.ptp(values)>1e-12:
             raise ValueError('Internal bed variation requires a sill/conveyance model; unsupported')
-        beds.append(values[0]);areas.append(len(cells)*dx*dy)
-        centers.append(((cells[:,1].mean()+.5)*dx,(cells[:,0].mean()+.5)*dy))
-    centers=np.asarray(centers);contacts={}
+        beds.append(values[0]);areas.append(len(region_cells)*dx*dy)
+        centers.append(((region_cells[:,1].mean()+.5)*dx,(region_cells[:,0].mean()+.5)*dy))
+    centers=np.asarray(centers);contacts: dict[tuple[int, int, int], float] = {}
     for r in range(ny):
         for c in range(nx):
             a=labels[r,c]
@@ -74,7 +74,7 @@ def build_graph(bed, solid, factor, dx=1., dy=1.):
         ('east',[(r,nx-1) for r in range(ny)],dy,0,nx*dx),
         ('south',[(0,c) for c in range(nx)],dx,1,0),
         ('north',[(ny-1,c) for c in range(nx)],dx,1,ny*dy)):
-        counts={}
+        counts: dict[int, float] = {}
         for r,c in cells:
             a=int(labels[r,c])
             if a>=0:counts[a]=counts.get(a,0)+width

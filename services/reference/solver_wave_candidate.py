@@ -7,6 +7,7 @@ import numpy as np
 from services.reference.characteristic_boundary import CharacteristicBoundary, wave_ghost
 from services.reference.solver import Array, G, minmod
 from services.reference.solver_segments_candidate import Solver as SegmentSolver
+from services.reference.solver_segments_candidate import _slices
 
 
 class Solver(SegmentSolver):
@@ -25,19 +26,19 @@ class Solver(SegmentSolver):
         mask = np.pad(self.surface.solid, pad, mode="edge")
         normal = 2 if axis == 0 else 1
         if self.config.boundary == "closed":
-            lo, hi = [slice(None)] * 3, [slice(None)] * 3
+            lo, hi = _slices(3), _slices(3)
             lo[axis], hi[axis] = 0, -1
             lo[2] = hi[2] = normal
             p[tuple(lo)] *= -1
             p[tuple(hi)] *= -1
         else:
             # Transmissive outward-only boundaries: no undocumented inflow.
-            lo, hi = [slice(None)] * 3, [slice(None)] * 3
+            lo, hi = _slices(3), _slices(3)
             lo[axis], hi[axis] = 0, -1
             lo[2] = hi[2] = normal
             p[tuple(lo)] = np.minimum(p[tuple(lo)], 0)
             p[tuple(hi)] = np.maximum(p[tuple(hi)], 0)
-        left, right = [slice(None)] * 2, [slice(None)] * 2
+        left, right = _slices(2), _slices(2)
         left[axis], right[axis] = slice(None, -1), slice(1, None)
         l, r = tuple(left), tuple(right)
         pl, pr, zl, zr = p[l].copy(), p[r].copy(), z[l].copy(), z[r].copy()
@@ -50,7 +51,7 @@ class Solver(SegmentSolver):
             eta = h + z
             def slope(a):
                 s = minmod(a - np.roll(a, 1, axis), np.roll(a, -1, axis) - a)
-                edge0, edge1 = [slice(None)] * a.ndim, [slice(None)] * a.ndim
+                edge0, edge1 = _slices(a.ndim), _slices(a.ndim)
                 edge0[axis], edge1[axis] = 0, -1
                 s[tuple(edge0)] = s[tuple(edge1)] = 0
                 near_solid = mask | np.roll(mask, 1, axis) | np.roll(mask, -1, axis)
@@ -66,22 +67,22 @@ class Solver(SegmentSolver):
             pl[..., 0], pr[..., 0] = hl, hr
             pl[..., 1:] = hl[..., None] * (vel[l] + sv[l]/2)
             pr[..., 1:] = hr[..., None] * (vel[r] - sv[r]/2)
-            inner = [slice(None)] * 2
+            inner = _slices(2)
             inner[axis] = slice(1, -1)
             bed_source = -G * h[tuple(inner)] * sz[tuple(inner)]
         # Boundary ghost states must mirror the reconstructed fluid face. A
         # centre-based ghost leaves artificial wall flux when velocity slopes exist.
-        low, high = [slice(None)] * 2, [slice(None)] * 2
+        low, high = _slices(2), _slices(2)
         low[axis], high[axis] = 0, -1
-        low, high = tuple(low), tuple(high)
-        pl[low], zl[low] = pr[low], zr[low]
-        pr[high], zr[high] = pl[high], zl[high]
+        low_index, high_index = tuple(low), tuple(high)
+        pl[low_index], zl[low_index] = pr[low_index], zr[low_index]
+        pr[high_index], zr[high_index] = pl[high_index], zl[high_index]
         if self.config.boundary == "closed":
-            pl[..., normal][low] *= -1
-            pr[..., normal][high] *= -1
+            pl[..., normal][low_index] *= -1
+            pr[..., normal][high_index] *= -1
         else:
-            pl[..., normal][low] = np.minimum(pl[..., normal][low], 0)
-            pr[..., normal][high] = np.maximum(pr[..., normal][high], 0)
+            pl[..., normal][low_index] = np.minimum(pl[..., normal][low_index], 0)
+            pr[..., normal][high_index] = np.maximum(pr[..., normal][high_index], 0)
         for _, boundary in self.coastal_segments:
             if axis == (1 if boundary.edge in ('west','east') else 0):
                 level=boundary.level(self.time if boundary_time is None else boundary_time)

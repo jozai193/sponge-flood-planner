@@ -24,25 +24,25 @@ def build_refined_graph(bed, solid, factor, initial_depth, dx=1., dy=1., dry_tol
     buffered[:, 1:] |= blocks[:, :-1]; buffered[:, :-1] |= blocks[:, 1:]
     refined = buffered.repeat(factor, 0).repeat(factor, 1)
     labels = np.full(depth.shape, -1, dtype=int)
-    ids = {}
+    ids: dict[tuple[str, int], int] = {}
     for r, c in np.argwhere(fine.labels >= 0):
-        key = ('fine', int(fine.labels[r, c])) if refined[r, c] else ('coarse', int(coarse.labels[r, c]))
-        labels[r, c] = ids.setdefault(key, len(ids))
+        region_key = ('fine', int(fine.labels[r, c])) if refined[r, c] else ('coarse', int(coarse.labels[r, c]))
+        labels[r, c] = ids.setdefault(region_key, len(ids))
     count = len(ids)
     mapped = labels[fine.labels >= 0]
     area = np.bincount(mapped, weights=fine.area, minlength=count)
     center = np.column_stack([np.bincount(mapped, weights=fine.center[:, k]*fine.area,
                                         minlength=count)/area for k in (0, 1)])
     beds = np.bincount(mapped, weights=fine.bed*fine.area, minlength=count)/area
-    contacts = {}
+    contacts: dict[tuple[int, int, int], float] = {}
     for a, b, width, length, sill in fine.links:
         aa, bb = int(mapped[a]), int(mapped[b])
         if aa == bb:
             continue
         axis = int(np.argmax(np.abs(fine.center[b]-fine.center[a])))
         # Different fine contacts can meet the same mixed-resolution face.
-        key = (aa, bb, axis)
-        contacts[key] = contacts.get(key, 0.) + width
+        contact_key = (aa, bb, axis)
+        contacts[contact_key] = contacts.get(contact_key, 0.) + width
     links = []
     for (a, b, axis), width in contacts.items():
         distance = abs(center[b, axis]-center[a, axis])
@@ -52,7 +52,7 @@ def build_refined_graph(bed, solid, factor, initial_depth, dx=1., dy=1., dry_tol
     faces = {}
     for edge, axis, position in (('west', 0, 0.), ('east', 0, nx*dx),
                                   ('south', 1, 0.), ('north', 1, ny*dy)):
-        widths = {}
+        widths: dict[int, float] = {}
         for a, _, width, _, _ in fine.boundary_faces[edge]:
             aa = int(mapped[a]); widths[aa] = widths.get(aa, 0.) + width
         faces[edge] = [(a, -1, width, abs(center[a, axis]-position), beds[a])

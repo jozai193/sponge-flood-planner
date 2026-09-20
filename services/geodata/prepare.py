@@ -95,7 +95,7 @@ def prepare(request: dict, progress=lambda stage: None, supplements: dict | None
         features,building_sources=buildings(bounds)
     sources.extend(building_sources)
     extent=box(xmin,ymin,xmin+req.extent_m,ymin+req.extent_m)
-    output_buildings=[]; polygons=[]
+    output_buildings: list[dict] = []; polygons=[]
     for i,feature in enumerate(features):
         geo=feature.get("geometry")
         if not geo: continue

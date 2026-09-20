@@ -13,7 +13,7 @@ def terrain_metrics(z,dx,dy,solid=None):
     if blocked.shape!=z.shape:raise ValueError('Obstacle shape mismatch')
     # Four-neighbour priority flood matches face-connected surface transport.
     # Domain edges are diagnostic spill exits, not imposed hydraulic outlets.
-    seen=blocked.copy();filled=z.copy();queue=[]
+    seen=blocked.copy();filled=z.copy();queue: list[tuple[float, int, int]] = []
     for y in range(ny):
         for x in range(nx):
             if (y in (0,ny-1) or x in (0,nx-1)) and not seen[y,x]:

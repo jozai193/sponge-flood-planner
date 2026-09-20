@@ -18,7 +18,7 @@ Verified 20 September 2026. This is an engineering release-candidate record, not
 | TypeScript contracts, optimizer and metrics | 134 passed | `pnpm test` |
 | Real browser/GPU journeys | 46 passed | `pnpm test:browser` |
 | TypeScript safety and production assets | passed; largest JS chunk 219 kB | `pnpm build` |
-| Python API/worker-boundary typing | passed | `mypy` |
+| Python service-package typing | passed, 61 source files | `mypy` |
 | Python lint | passed, all enabled rules | `ruff check services scripts tests` |
 | JavaScript production dependency audit | no known vulnerabilities | `pnpm audit --prod` |
 | Locked Python dependency audit | no known vulnerabilities | `pip-audit --no-deps --disable-pip` over the frozen `uv` export |

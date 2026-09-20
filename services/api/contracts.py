@@ -104,7 +104,8 @@ class Design(WireModel):
 
     @model_validator(mode="after")
     def feasible(self):
-        occupied, ids = set(), set()
+        occupied: set[int] = set()
+        ids: set[str] = set()
         for item in self.interventions:
             if item.id in ids or occupied.intersection(item.cells):
                 raise ValueError("Duplicate or overlapping interventions")

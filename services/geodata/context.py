@@ -26,7 +26,7 @@ def mapped_context(manifest):
         raw,source=fetch('https://services.arcgis.com/fLeGjb7u4uXqeF9q/ArcGIS/rest/services/Street_Centerline/FeatureServer/0/query',{'f':'geojson','where':'1=1','geometry':f'{west},{south},{east},{north}','geometryType':'esriGeometryEnvelope','inSR':4326,'spatialRel':'esriSpatialRelIntersects','outFields':'*','outSR':4326,'resultRecordCount':2000},timeout_s=15)
         features=json.loads(raw)
         if 'features' not in features or len(features['features'])>=2000:raise ValueError('Street dataset incomplete')
-        data={'elements':[]}
+        data: dict[str, list[dict]] = {'elements':[]}
         for feature in features['features']:
             props={k.lower():v for k,v in feature['properties'].items()};geom=feature['geometry']
             parts=[geom['coordinates']] if geom['type']=='LineString' else geom['coordinates']

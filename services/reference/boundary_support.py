@@ -1,4 +1,6 @@
 """Metadata/geometry diagnostics; this module does not admit physical boundaries."""
+from typing import Any
+
 import numpy as np
 
 
@@ -9,7 +11,7 @@ def boundary_support(terrain, points, offsets, samples):
     if samples < 1:
         raise ValueError('Positive sample count required')
     edges = {'west': z[:,0], 'east': z[:,-1], 'south': z[0,:], 'north': z[-1,:]}
-    index = {}
+    index: dict[tuple[str, int], bool] = {}
     for point in points:
         edge, i = point['edge'], point['face_index']
         if edge not in edges or not isinstance(i,int) or not 0 <= i < len(edges[edge]) or (edge,i) in index:
@@ -23,7 +25,7 @@ def boundary_support(terrain, points, offsets, samples):
     rows = []
     for offset in offsets:
         if not np.isfinite(offset): raise ValueError('Finite datum offset required')
-        detail = []
+        detail: list[dict[str, Any]] = []
         for edge, bed in edges.items():
             low = bed < offset
             unsupported = [i for i in range(len(bed)) if low[i] and not index[edge,i]]

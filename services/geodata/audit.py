@@ -18,7 +18,7 @@ def audit_bundle(folder: Path) -> dict:
         checks.append({'key': key, 'title': title, 'status': status, 'detail': detail})
 
     # Only canonical filenames are read, never paths supplied by a manifest.
-    arrays = {}
+    arrays: dict[str, np.ndarray] = {}
     errors = []
     for name, dtype in [('z', '<f4'), ('solid', 'u1')]:
         artifact = next((a for a in manifest.get('artifacts', []) if a['name'] == name), None)
@@ -31,7 +31,7 @@ def audit_bundle(folder: Path) -> dict:
         if len(raw) != expected or not artifact or hashlib.sha256(raw).hexdigest() != artifact.get('sha256'):
             errors.append(f'{name}: size or checksum mismatch')
             continue
-        array = np.frombuffer(raw, dtype=dtype)
+        array: np.ndarray = np.frombuffer(raw, dtype=dtype)
         if not np.isfinite(array).all():
             errors.append(f'{name}: non-finite values')
             continue

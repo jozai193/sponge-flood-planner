@@ -28,7 +28,7 @@ class EnrichmentRequest(WireModel):
     def dates(self):
         if len(set(self.capabilities))!=len(self.capabilities):raise ValueError('Duplicate capability')
         if bool(self.start_date)!=bool(self.end_date):raise ValueError('Both event dates are required')
-        if self.start_date and not 0<=(self.end_date-self.start_date).days<=2:
+        if self.start_date and self.end_date and not 0<=(self.end_date-self.start_date).days<=2:
             raise ValueError('Choose an event lasting at most three calendar days')
         return self
 
@@ -59,7 +59,7 @@ def enrichment_job(resource_id,bundle_id,request):
     from services.api.database import update_resource
     folder=EVIDENCE/resource_id;folder.mkdir(parents=True,exist_ok=True)
     (folder/'request.json').write_text(json.dumps(request),encoding='utf-8')
-    results={}
+    results: dict[str, dict[str, object]] = {}
     for capability in request['capabilities']:
         from services.api.settings import settings
         if capability=='dynamic_world' and not settings.ee_project:
