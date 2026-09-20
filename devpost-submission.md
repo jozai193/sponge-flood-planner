@@ -88,7 +88,7 @@ Open `http://127.0.0.1:5173` and follow the prepared-demo path. The README inclu
 
 ## Public Demo Link
 
-HTTPS judge tour: https://alt-lay-executed-casual.trycloudflare.com/?tour=1
+HTTPS judge tour: https://52.87.104.31.sslip.io/?tour=1
 
 This HTTPS endpoint serves the isolated production stack and passed a fresh external production smoke test, including the prepared demo path, scenario dispatch, security headers, and zero browser console errors.
 

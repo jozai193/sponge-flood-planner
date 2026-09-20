@@ -4,7 +4,7 @@ SPONGE is a deployable neighbourhood stormwater screening application. It combin
 
 The software is release-engineered for an **exploratory screening** use case. It is not a calibrated flood forecast, an engineering design, or a substitute for surveyed drainage, parcel eligibility, observed-event validation, or professional review.
 
-**Public judge demo:** https://alt-lay-executed-casual.trycloudflare.com/?tour=1
+**Public judge demo:** https://52.87.104.31.sslip.io/?tour=1
 
 ## Run locally
 
