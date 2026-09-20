@@ -1,6 +1,7 @@
 """Initial session and immutable resource metadata."""
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
+
 revision="0001"
 down_revision=None
 branch_labels=None

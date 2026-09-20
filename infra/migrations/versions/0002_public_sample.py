@@ -1,8 +1,8 @@
 """Register the immutable public Spring Garden sample."""
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 from sqlalchemy.dialects.postgresql import insert
 
 revision = "0002"
@@ -24,7 +24,7 @@ def upgrade():
         sa.column("created_at", sa.DateTime(timezone=True)),
         sa.column("updated_at", sa.DateTime(timezone=True)),
     )
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     statement = insert(resources).values({
         "id": SAMPLE_ID,
         "session_id": None,
