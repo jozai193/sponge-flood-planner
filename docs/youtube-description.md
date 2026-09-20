@@ -33,4 +33,4 @@ Chapters:
 - Visibility: Public
 - Audience: No, it is not made for kids
 - Category: Science & Technology
-- Thumbnail candidate: `output/submission/SPONGE-Devpost-thumbnail.png`
+- Thumbnail candidate: `output/submission/SPONGE-YouTube-thumbnail.png`
