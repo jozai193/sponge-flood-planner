@@ -88,9 +88,9 @@ Open `http://127.0.0.1:5173` and follow the prepared-demo path. The README inclu
 
 ## Public Demo Link
 
-Temporary HTTPS judge preview: https://terrain-casino-observed-dated.trycloudflare.com/?tour=1
+HTTPS judge tour: https://4b1420bc7d0439.lhr.life/?tour=1
 
-This Quick Tunnel serves the isolated production stack and passed the production smoke flow. It has no uptime guarantee and remains available only while the local production stack and tunnel connector stay online.
+This temporary HTTPS tunnel serves the isolated production stack and passed a fresh external-browser check with zero console errors. It has no uptime guarantee and remains available only while the local production stack and tunnel connector stay online.
 
 ## Public Repository Link
 
@@ -98,7 +98,7 @@ https://github.com/jozai193/sponge-flood-planner
 
 ## Demo Video
 
-Final narrated video prepared locally: `output/video/SPONGE-NextStep-demo.mp4` (4:57.6, H.264/AAC, 1440×960). **TODO before final Devpost submission:** upload it and insert the public YouTube URL.
+Final narrated video prepared locally: `output/video/SPONGE-NextStep-demo.mp4` (4:53, H.264/AAC, 1440×900). It uses the current dark UI and Deepgram Aura-2 Orion narration. **TODO before final Devpost submission:** upload it and insert the public YouTube URL.
 
 ## Screenshot Shot List
 
@@ -112,8 +112,8 @@ Final narrated video prepared locally: `output/video/SPONGE-NextStep-demo.mp4` (
 
 ## Submission Readiness Notes
 
-- Application, production stack, immutable demo data, tests, documentation, screenshots, and a final narrated 4:57.6 demonstration exist locally.
-- The public GitHub repository and temporary HTTPS judge preview are live.
+- Application, production stack, immutable demo data, tests, documentation, screenshots, and a final narrated 4:53 demonstration exist locally.
+- The public GitHub repository and externally verified HTTPS judge preview are live.
 - Video upload, thumbnail upload, Devpost synchronization, and the explicit final-submit confirmation remain release actions.
 - Numerical and software verification do not establish calibrated neighbourhood flood accuracy.
 
