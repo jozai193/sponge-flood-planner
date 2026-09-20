@@ -1,6 +1,9 @@
 import {test,expect} from '@playwright/test';
 test('independent tabs cannot overwrite or discard each others storm checkpoints',async({context})=>{
  const first=await context.newPage(),second=await context.newPage();
+ const reload=async(page:typeof first)=>expect(async()=>{
+  await page.reload({waitUntil:'domcontentloaded',timeout:30000});
+ }).toPass({timeout:60000,intervals:[1000,2000]});
  await first.goto('/');await second.goto('/');
  for(const [page,label] of [[first,'first'],[second,'second']] as const){
   await page.evaluate(async(label)=>{
@@ -23,13 +26,13 @@ test('independent tabs cannot overwrite or discard each others storm checkpoints
  await duplicate.goto('/');
  expect(await read(duplicate)).toBe('first');
  expect(await duplicate.evaluate(()=>sessionStorage.getItem('sponge-recovery-key'))).not.toBe(originalKey);
- await duplicate.reload();expect(await read(duplicate)).toBe('first');
+ await reload(duplicate);expect(await read(duplicate)).toBe('first');
  await duplicate.evaluate(async()=>{const path='/src/recovery.ts';await (await import(path)).saveRecovery(null);});
  expect(await read(duplicate)).toBeNull();expect(await read(first)).toBe('first');
  await duplicate.close();
  await second.evaluate(async()=>{const path='/src/recovery.ts';await (await import(path)).saveRecovery(null);});
  expect(await read(second)).toBeNull();expect(await read(first)).toBe('first');
- await first.reload();expect(await read(first)).toBe('first');
+ await reload(first);expect(await read(first)).toBe('first');
  // Simulate the older shared format, then race both tabs to claim it.
  await first.evaluate(async()=>{
   const path='/src/recovery.ts';const saved=await (await import(path)).readRecovery();

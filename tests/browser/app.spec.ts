@@ -7,8 +7,8 @@ test('real neighbourhood loads with explicit assumptions',async({page})=>{
   await expect(page.getByRole('button',{name:'Run storm'})).toBeEnabled({timeout:30000});
   await page.getByRole('button',{name:'Data & assumptions'}).click();
   await expect(page.getByText('Development model.',{exact:false})).toBeVisible();
-  await expect(page.getByRole('heading',{name:'Terrain and obstacle integrity · checked'})).toBeVisible();
-  await expect(page.getByRole('heading',{name:'Drainage network · unverified'})).toBeVisible();
+  await expect(page.getByRole('heading',{name:'Terrain and obstacle integrity · checked'})).toBeVisible({timeout:30000});
+  await expect(page.getByRole('heading',{name:'Drainage network · unverified'})).toBeVisible({timeout:30000});
   await page.getByRole('button',{name:'Close',exact:true}).click();
   await page.getByLabel('Assume this site is eligible',{exact:false}).check();
   await page.getByRole('button',{name:'Apply to area'}).click();

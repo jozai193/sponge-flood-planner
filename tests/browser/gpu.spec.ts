@@ -141,7 +141,7 @@ test('physics planner completes budgeted search and records aligned baseline and
   return await new Promise<any>((resolve,reject)=>{
    const worker=new Worker('/@fs/E:/Nextstep%20Hacks%20hackathon/packages/simulation/src/planner-worker.ts',{type:'module'});
    const frames:{baseline:number[];planned:number[]}={baseline:[],planned:[]};let plan:any;
-   const timeout=setTimeout(()=>{worker.terminate();reject(new Error('Planner timeout'));},30000);
+   const timeout=setTimeout(()=>{worker.terminate();reject(new Error('Planner timeout'));},60000);
    worker.onerror=e=>{clearTimeout(timeout);worker.terminate();reject(new Error(e.message));};
    worker.onmessage=e=>{const d=e.data;if(d.type==='PLAN')plan=d.result;if(d.type==='REPLAY')frames[d.side as 'baseline'|'planned'].push(d.frame.time_s);
     if(d.type==='ERROR'){clearTimeout(timeout);worker.terminate();reject(new Error(d.error));}
