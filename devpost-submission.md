@@ -84,11 +84,11 @@ Requirements: Node.js, pnpm, Python 3.11+ for bootstrap, and Docker Desktop with
 ./Start-SPONGE.ps1
 ```
 
-Open `http://127.0.0.1:5173` and follow the prepared-demo path. The README includes the full verification commands. The audited release passed 333 Python tests, 134 TypeScript tests, 46 browser/GPU tests, full Ruff and mypy checks, dependency audits, generated-contract verification, a production build, and a clean production-container smoke test.
+Open `http://127.0.0.1:5173` and follow the prepared-demo path. The README includes the full verification commands. The audited release passed 334 Python tests, 136 TypeScript tests, 46 browser/GPU tests, full Ruff and mypy checks, dependency audits, generated-contract verification, a production build, and a clean production-container smoke test.
 
 ## Public Demo Link
 
-HTTPS judge tour: https://4b1420bc7d0439.lhr.life/?tour=1
+HTTPS judge tour: https://susan-absorption-sand-implied.trycloudflare.com/?tour=1
 
 This temporary HTTPS tunnel serves the isolated production stack and passed a fresh external-browser check with zero console errors. It has no uptime guarantee and remains available only while the local production stack and tunnel connector stay online.
 
@@ -114,7 +114,7 @@ Final narrated video prepared locally: `output/video/SPONGE-NextStep-demo.mp4` (
 
 - Application, production stack, immutable demo data, tests, documentation, screenshots, and a final narrated 4:53 demonstration exist locally.
 - The public GitHub repository and externally verified HTTPS judge preview are live.
-- Video upload, thumbnail upload, Devpost synchronization, and the explicit final-submit confirmation remain release actions.
+- Video upload, thumbnail/gallery upload, Devpost synchronization, eligibility confirmation, and the explicit final-submit confirmation remain entrant actions.
 - Numerical and software verification do not establish calibrated neighbourhood flood accuracy.
 
 ## Known Limitations

@@ -59,7 +59,7 @@ Real geospatial data introduced a second challenge: coverage, resolution, survey
 - Interrupted-storm recovery, GPU-context recovery and duplicated-tab isolation.
 - Reproducible, tamper-checked evidence exports.
 - Clean production deployment with a non-root image, migrations, persistent storage, worker-aware readiness, request limits and security headers.
-- Final verification: 333 Python tests, 134 TypeScript tests and 46 real-browser/GPU tests, plus dependency audits, schema checks and a rebuilt production-container smoke test.
+- Final verification: 334 Python tests, 136 TypeScript tests and 46 real-browser/GPU tests, plus dependency audits, schema checks and a rebuilt production-container smoke test.
 
 ## What we learned
 
@@ -71,13 +71,17 @@ Next steps are a pilot with a community or stormwater practitioner, observed-eve
 
 ## Work-period disclosure
 
-The entrant must replace this paragraph with exact facts before submission: what existed before August 21, 2026, what was created during NextStep Hacks, and which team member did what. If the project began entirely during the event, say that explicitly. Do not leave this placeholder in the submitted page.
+SPONGE began during the NextStep Hacks build period. Product architecture and planning started on September 10, 2026, followed by implementation, numerical verification, browser QA, production hardening, and submission preparation through September 20. No SPONGE implementation existed before the event. Earlier files in the workspace concerned a separate product-research concept and were not reused as SPONGE code or presented as this submission.
+
+The project was built by Aditya Jevoor with Codex as an AI engineering collaborator. Codex assisted with planning, implementation, debugging, auditing, testing, and documentation; the entrant directed product decisions and accepts responsibility for the submitted work and claims.
 
 ## Submission fields still requiring the entrant
 
-- public repository URL;
-- hosted application URL, preferably the prepared `?tour=1` judge entry point;
 - 3–5 minute narrated video URL;
 - team members and individual eligibility confirmation;
-- exact disclosure of work completed before versus during the hackathon, if applicable;
 - final screenshots and acceptance of Devpost terms.
+
+Prepared links:
+
+- repository: https://github.com/jozai193/sponge-flood-planner
+- judge tour: https://susan-absorption-sand-implied.trycloudflare.com/?tour=1

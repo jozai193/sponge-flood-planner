@@ -42,7 +42,7 @@ Open the export controls and show the planning HTML, reproducible scenario JSON,
 
 Briefly show restore controls or reload an interrupted storm.
 
-“Flood simulation itself is not new—EPA SWMM and prior flood dashboards prove that. What I built differently is a judge-accessible chain from live browser physics, through finite intervention storage and robust budget search, to synchronized comparison and tamper-checked evidence. SPONGE runs without an account, recovers interrupted work, and ships as a hardened production container. The final suite passes 333 Python tests, 134 TypeScript tests and 46 real-browser and GPU tests.”
+“Flood simulation itself is not new—EPA SWMM and prior flood dashboards prove that. What I built differently is a judge-accessible chain from live browser physics, through finite intervention storage and robust budget search, to synchronized comparison and tamper-checked evidence. SPONGE runs without an account, recovers interrupted work, and ships as a hardened production container. The final suite passes 334 Python tests, 136 TypeScript tests and 46 real-browser and GPU tests.”
 
 Add one truthful sentence in your own voice: what you knew before this event, what you had to learn, and which part stretched you most. If any code existed before August 21, disclose it here and on Devpost.
 
