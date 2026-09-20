@@ -88,7 +88,9 @@ Open `http://127.0.0.1:5173` and follow the prepared-demo path. The README inclu
 
 ## Public Demo Link
 
-**TODO before final Devpost submission:** public HTTPS deployment URL, ideally with `?tour=1` for the judge entry point.
+Temporary HTTPS judge preview: https://terrain-casino-observed-dated.trycloudflare.com/?tour=1
+
+This Quick Tunnel serves the isolated production stack and passed the production smoke flow. It has no uptime guarantee and remains available only while the local production stack and tunnel connector stay online.
 
 ## Public Repository Link
 
@@ -96,7 +98,7 @@ https://github.com/jozai193/sponge-flood-planner
 
 ## Demo Video
 
-**TODO before final Devpost submission:** public YouTube or Vimeo URL for the final narrated 3–5 minute demonstration.
+Final narrated video prepared locally: `output/video/SPONGE-NextStep-demo.mp4` (4:57.6, H.264/AAC, 1440×960). **TODO before final Devpost submission:** upload it and insert the public YouTube URL.
 
 ## Screenshot Shot List
 
@@ -110,9 +112,9 @@ https://github.com/jozai193/sponge-flood-planner
 
 ## Submission Readiness Notes
 
-- Application, production stack, immutable demo data, tests, documentation, screenshots, and a timed 4:59 browser capture exist locally.
-- The current 4:59 capture is evidence footage, not the final upload: it needs narration/captions and a clearer completed comparison/export segment.
-- Repository publication, public HTTPS hosting, final video upload, thumbnail selection, and Devpost synchronization remain release actions.
+- Application, production stack, immutable demo data, tests, documentation, screenshots, and a final narrated 4:57.6 demonstration exist locally.
+- The public GitHub repository and temporary HTTPS judge preview are live.
+- Video upload, thumbnail upload, Devpost synchronization, and the explicit final-submit confirmation remain release actions.
 - Numerical and software verification do not establish calibrated neighbourhood flood accuracy.
 
 ## Known Limitations
@@ -132,4 +134,4 @@ The project was built by Aditya Jevoor with Codex as an AI engineering collabora
 
 ## TODO Official Form Fields
 
-The live NextStep Hacks submission form currently exposes no custom questions. Final Devpost fields still require the public demo URL, final video URL, project thumbnail/gallery choices, and a last review of team and eligibility details.
+The live NextStep Hacks submission form currently exposes no custom questions. Final Devpost fields still require the video URL, project thumbnail/gallery choices, and a last review of team and eligibility details.
