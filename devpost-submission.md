@@ -88,9 +88,9 @@ Open `http://127.0.0.1:5173` and follow the prepared-demo path. The README inclu
 
 ## Public Demo Link
 
-HTTPS judge tour: https://alt-lay-executed-casual.trycloudflare.com/?tour=1
+HTTPS judge tour: https://52.87.104.31.sslip.io/?tour=1
 
-This temporary HTTPS tunnel serves the isolated production stack and passed a fresh external-browser check with zero console errors. It has no uptime guarantee and remains available only while the local production stack and tunnel connector stay online.
+This stable HTTPS endpoint serves the isolated production stack from an AWS EC2 host with a static Elastic IP and automatic TLS. The same production image can be reproduced from the repository deployment instructions.
 
 ## Public Repository Link
 

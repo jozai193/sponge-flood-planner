@@ -1,0 +1,163 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >-
+  Single-host SPONGE judge deployment with a static public IPv4 address,
+  encrypted storage, and automatic HTTPS. The application is built from the
+  exact submitted Git commit and runs behind Caddy.
+
+Parameters:
+  InstanceType:
+    Type: String
+    Default: t3.medium
+    AllowedValues:
+      - t3.small
+      - t3.medium
+      - t3.large
+    Description: EC2 instance size. t3.medium is the tested judge default.
+  LatestAmiId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/canonical/ubuntu/server/24.04/stable/current/amd64/hvm/ebs-gp3/ami-id
+    Description: Canonical Ubuntu 24.04 LTS x86-64 AMI resolved by AWS.
+  GitRepository:
+    Type: String
+    Default: https://github.com/jozai193/sponge-flood-planner.git
+  GitCommit:
+    Type: String
+    Default: 04ea05db041fee75439066ab84ffa9055f60a3ca
+    AllowedPattern: "^[0-9a-f]{40}$"
+    Description: Immutable submitted commit to deploy.
+
+Resources:
+  SpongeSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Public HTTPS access to the SPONGE judge deployment
+      SecurityGroupIngress:
+        - Description: HTTP for certificate issuance and HTTPS redirect
+          IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - Description: HTTPS judge access
+          IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - Description: Package, source, image, and certificate downloads
+          IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: sponge-judge-web
+        - Key: Project
+          Value: SPONGE
+
+  SpongeElasticIp:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: sponge-judge-ip
+        - Key: Project
+          Value: SPONGE
+
+  SpongeInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref LatestAmiId
+      InstanceType: !Ref InstanceType
+      CreditSpecification:
+        CPUCredits: standard
+      SecurityGroupIds:
+        - !GetAtt SpongeSecurityGroup.GroupId
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            DeleteOnTermination: true
+            Encrypted: true
+            VolumeSize: 30
+            VolumeType: gp3
+      Tags:
+        - Key: Name
+          Value: sponge-judge
+        - Key: Project
+          Value: SPONGE
+      UserData:
+        Fn::Base64: !Sub |
+          #!/usr/bin/env bash
+          set -euxo pipefail
+          exec > >(tee /var/log/sponge-bootstrap.log | logger -t sponge-bootstrap -s 2>/dev/console) 2>&1
+
+          export DEBIAN_FRONTEND=noninteractive
+          until curl --fail --silent --show-error --connect-timeout 3 https://github.com/ >/dev/null; do
+            sleep 10
+          done
+          apt-get update
+          apt-get install --yes --no-install-recommends ca-certificates curl docker-compose-v2 docker.io git openssl
+          systemctl enable --now docker
+
+          if [ ! -f /swapfile ]; then
+            fallocate -l 4G /swapfile
+            chmod 600 /swapfile
+            mkswap /swapfile
+            swapon /swapfile
+            printf '/swapfile none swap sw 0 0\n' >> /etc/fstab
+          fi
+
+          install -d -m 0755 /opt/sponge
+          git clone --filter=blob:none "${GitRepository}" /opt/sponge/app
+          git -C /opt/sponge/app fetch --depth 1 origin "${GitCommit}"
+          git -C /opt/sponge/app checkout --detach "${GitCommit}"
+
+          HOSTNAME_FQDN="${SpongeElasticIp}.sslip.io"
+          DB_PASSWORD="$(openssl rand -hex 32)"
+          umask 077
+          printf '%s\n' \
+            "SPONGE_DB_PASSWORD=$DB_PASSWORD" \
+            "SPONGE_TRUSTED_HOSTS=$HOSTNAME_FQDN" \
+            "SPONGE_TRUSTED_PROXY_CIDRS=127.0.0.1/32" \
+            "SPONGE_PUBLIC_PORT=8080" \
+            > /opt/sponge/app/.env.aws
+
+          cd /opt/sponge/app
+          docker compose --env-file .env.aws -f infra/compose/compose.production.yaml up --build -d --wait
+
+          docker volume create sponge-caddy-data
+          docker volume create sponge-caddy-config
+          docker run --detach \
+            --name sponge-caddy \
+            --restart unless-stopped \
+            --network host \
+            --volume sponge-caddy-data:/data \
+            --volume sponge-caddy-config:/config \
+            caddy:2-alpine \
+            caddy reverse-proxy --from "https://$HOSTNAME_FQDN" --to http://127.0.0.1:8080
+
+          curl --fail --show-error --silent \
+            --retry 30 --retry-delay 10 --retry-all-errors \
+            "https://$HOSTNAME_FQDN/api/v1/ready" \
+            > /var/log/sponge-ready.json
+
+  SpongeElasticIpAssociation:
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      AllocationId: !GetAtt SpongeElasticIp.AllocationId
+      InstanceId: !Ref SpongeInstance
+
+Outputs:
+  JudgeDemoUrl:
+    Description: Stable HTTPS judge tour URL
+    Value: !Sub "https://${SpongeElasticIp}.sslip.io/?tour=1"
+  HealthUrl:
+    Description: Liveness endpoint
+    Value: !Sub "https://${SpongeElasticIp}.sslip.io/api/v1/health"
+  ReadinessUrl:
+    Description: Dependency-aware readiness endpoint
+    Value: !Sub "https://${SpongeElasticIp}.sslip.io/api/v1/ready"
+  InstanceId:
+    Description: EC2 instance identifier
+    Value: !Ref SpongeInstance
+  ElasticIp:
+    Description: Static public IPv4 address
+    Value: !Ref SpongeElasticIp

@@ -9,7 +9,7 @@ SPONGE — Live Neighbourhood Stormwater Planning | NextStep Hacks 2026
 SPONGE is an evidence-bounded neighbourhood stormwater screening application built for NextStep Hacks 2026. It combines sourced terrain and buildings, live browser shallow-water physics, four finite-capacity green-infrastructure models, bounded budget search, synchronized before/after replay, and tamper-checked planning exports.
 
 Try the judge preview:
-https://alt-lay-executed-casual.trycloudflare.com/?tour=1
+https://52.87.104.31.sslip.io/?tour=1
 
 Source code and reproducibility instructions:
 https://github.com/jozai193/sponge-flood-planner
