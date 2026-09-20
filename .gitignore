@@ -2,6 +2,7 @@ node_modules/
 .venv/
 .bootstrap/
 .env
+.devpost-hackathon-state.json
 .env.*
 !.env.example
 __pycache__/
