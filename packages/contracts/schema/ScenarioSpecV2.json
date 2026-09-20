@@ -1,0 +1,515 @@
+{
+  "$defs": {
+    "Coast": {
+      "additionalProperties": false,
+      "properties": {
+        "edge": {
+          "enum": [
+            "west",
+            "east",
+            "south",
+            "north"
+          ],
+          "title": "Edge",
+          "type": "string"
+        },
+        "cells": {
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 2048,
+          "minItems": 1,
+          "title": "Cells",
+          "type": "array"
+        },
+        "levels": {
+          "items": {
+            "$ref": "#/$defs/Level"
+          },
+          "maxItems": 10000,
+          "minItems": 1,
+          "title": "Levels",
+          "type": "array"
+        },
+        "source": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Source",
+          "type": "string"
+        },
+        "datum": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Datum",
+          "type": "string"
+        },
+        "segment_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 2048,
+          "title": "Segment Ids",
+          "type": "array"
+        },
+        "source_kind": {
+          "default": "assumed",
+          "enum": [
+            "measured",
+            "modelled",
+            "assumed"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "source_epoch": {
+          "default": "unknown",
+          "title": "Source Epoch",
+          "type": "string"
+        },
+        "vertical_transform": {
+          "default": "unverified",
+          "title": "Vertical Transform",
+          "type": "string"
+        },
+        "coverage_start_s": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Coverage Start S"
+        },
+        "coverage_end_s": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Coverage End S"
+        },
+        "bathymetry_status": {
+          "default": "missing",
+          "enum": [
+            "verified",
+            "missing",
+            "not_required"
+          ],
+          "title": "Bathymetry Status",
+          "type": "string"
+        },
+        "channel_support_status": {
+          "default": "missing",
+          "enum": [
+            "verified",
+            "missing",
+            "not_required"
+          ],
+          "title": "Channel Support Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "edge",
+        "cells",
+        "levels",
+        "source",
+        "datum"
+      ],
+      "title": "Coast",
+      "type": "object"
+    },
+    "Components": {
+      "additionalProperties": false,
+      "properties": {
+        "rainfall": {
+          "title": "Rainfall",
+          "type": "boolean"
+        },
+        "external": {
+          "title": "External",
+          "type": "boolean"
+        },
+        "coastal": {
+          "title": "Coastal",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "rainfall",
+        "external",
+        "coastal"
+      ],
+      "title": "Components",
+      "type": "object"
+    },
+    "Inflow": {
+      "additionalProperties": false,
+      "properties": {
+        "cell": {
+          "minimum": 0,
+          "title": "Cell",
+          "type": "integer"
+        },
+        "flowM3S": {
+          "minimum": 0,
+          "title": "Flowm3S",
+          "type": "number"
+        },
+        "startS": {
+          "minimum": 0,
+          "title": "Starts",
+          "type": "number"
+        },
+        "endS": {
+          "exclusiveMinimum": 0,
+          "title": "Ends",
+          "type": "number"
+        },
+        "source": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cell",
+        "flowM3S",
+        "startS",
+        "endS",
+        "source"
+      ],
+      "title": "Inflow",
+      "type": "object"
+    },
+    "Interval": {
+      "additionalProperties": false,
+      "properties": {
+        "start_s": {
+          "minimum": 0,
+          "title": "Start S",
+          "type": "number"
+        },
+        "end_s": {
+          "exclusiveMinimum": 0,
+          "title": "End S",
+          "type": "number"
+        },
+        "rate_m_s": {
+          "maximum": 0.001,
+          "minimum": 0,
+          "title": "Rate M S",
+          "type": "number"
+        }
+      },
+      "required": [
+        "start_s",
+        "end_s",
+        "rate_m_s"
+      ],
+      "title": "Interval",
+      "type": "object"
+    },
+    "Level": {
+      "additionalProperties": false,
+      "properties": {
+        "timeS": {
+          "minimum": 0,
+          "title": "Times",
+          "type": "number"
+        },
+        "elevationM": {
+          "title": "Elevationm",
+          "type": "number"
+        }
+      },
+      "required": [
+        "timeS",
+        "elevationM"
+      ],
+      "title": "Level",
+      "type": "object"
+    },
+    "Outlet": {
+      "additionalProperties": false,
+      "properties": {
+        "cell": {
+          "minimum": 0,
+          "title": "Cell",
+          "type": "integer"
+        },
+        "crestDepthM": {
+          "minimum": 0,
+          "title": "Crestdepthm",
+          "type": "number"
+        },
+        "ratePerS": {
+          "minimum": 0,
+          "title": "Ratepers",
+          "type": "number"
+        },
+        "maxFlowM3S": {
+          "minimum": 0,
+          "title": "Maxflowm3S",
+          "type": "number"
+        },
+        "tailwaterElevationM": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tailwaterelevationm"
+        },
+        "source": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cell",
+        "crestDepthM",
+        "ratePerS",
+        "maxFlowM3S",
+        "source"
+      ],
+      "title": "Outlet",
+      "type": "object"
+    },
+    "ScenarioDomain": {
+      "additionalProperties": false,
+      "properties": {
+        "nx": {
+          "maximum": 2048,
+          "minimum": 4,
+          "title": "Nx",
+          "type": "integer"
+        },
+        "ny": {
+          "maximum": 2048,
+          "minimum": 4,
+          "title": "Ny",
+          "type": "integer"
+        },
+        "dx_m": {
+          "exclusiveMinimum": 0,
+          "title": "Dx M",
+          "type": "number"
+        },
+        "dy_m": {
+          "exclusiveMinimum": 0,
+          "title": "Dy M",
+          "type": "number"
+        },
+        "horizontal_crs": {
+          "minLength": 1,
+          "title": "Horizontal Crs",
+          "type": "string"
+        },
+        "vertical_datum": {
+          "minLength": 1,
+          "title": "Vertical Datum",
+          "type": "string"
+        },
+        "elevation_origin_m": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Elevation Origin M"
+        },
+        "bundle_id": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bundle Id"
+        }
+      },
+      "required": [
+        "nx",
+        "ny",
+        "dx_m",
+        "dy_m",
+        "horizontal_crs",
+        "vertical_datum"
+      ],
+      "title": "ScenarioDomain",
+      "type": "object"
+    },
+    "ScenarioForcing": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "const": 2,
+          "title": "Version",
+          "type": "integer"
+        },
+        "components": {
+          "$ref": "#/$defs/Components"
+        },
+        "storm": {
+          "$ref": "#/$defs/ScenarioStorm"
+        },
+        "coastal": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Coast"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "inflows": {
+          "items": {
+            "$ref": "#/$defs/Inflow"
+          },
+          "maxItems": 4194304,
+          "title": "Inflows",
+          "type": "array"
+        },
+        "outlets": {
+          "items": {
+            "$ref": "#/$defs/Outlet"
+          },
+          "maxItems": 4194304,
+          "title": "Outlets",
+          "type": "array"
+        }
+      },
+      "required": [
+        "version",
+        "components",
+        "storm",
+        "inflows",
+        "outlets"
+      ],
+      "title": "ScenarioForcing",
+      "type": "object"
+    },
+    "ScenarioStorm": {
+      "additionalProperties": false,
+      "properties": {
+        "duration": {
+          "exclusiveMinimum": 0,
+          "title": "Duration",
+          "type": "number"
+        },
+        "recession": {
+          "minimum": 0,
+          "title": "Recession",
+          "type": "number"
+        },
+        "depth": {
+          "minimum": 0,
+          "title": "Depth",
+          "type": "number"
+        },
+        "intervals": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/Interval"
+              },
+              "maxItems": 10000,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Intervals"
+        }
+      },
+      "required": [
+        "duration",
+        "recession",
+        "depth"
+      ],
+      "title": "ScenarioStorm",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "const": 2,
+      "title": "Version",
+      "type": "integer"
+    },
+    "engine": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Engine",
+      "type": "string"
+    },
+    "domain": {
+      "$ref": "#/$defs/ScenarioDomain"
+    },
+    "forcing": {
+      "$ref": "#/$defs/ScenarioForcing"
+    },
+    "required_capabilities": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 32,
+      "title": "Required Capabilities",
+      "type": "array"
+    },
+    "execution_input_hash": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Execution Input Hash"
+    }
+  },
+  "required": [
+    "version",
+    "engine",
+    "domain",
+    "forcing",
+    "required_capabilities"
+  ],
+  "title": "ScenarioSpecV2",
+  "type": "object"
+}

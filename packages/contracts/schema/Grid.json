@@ -1,0 +1,68 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "nx": {
+      "maximum": 2048,
+      "minimum": 4,
+      "title": "Nx",
+      "type": "integer"
+    },
+    "ny": {
+      "maximum": 2048,
+      "minimum": 4,
+      "title": "Ny",
+      "type": "integer"
+    },
+    "dx_m": {
+      "exclusiveMinimum": 0,
+      "maximum": 1000,
+      "title": "Dx M",
+      "type": "number"
+    },
+    "dy_m": {
+      "exclusiveMinimum": 0,
+      "maximum": 1000,
+      "title": "Dy M",
+      "type": "number"
+    },
+    "crs": {
+      "default": "LOCAL_METRES",
+      "title": "Crs",
+      "type": "string"
+    },
+    "origin_x_m": {
+      "default": 0,
+      "title": "Origin X M",
+      "type": "number"
+    },
+    "origin_y_m": {
+      "default": 0,
+      "title": "Origin Y M",
+      "type": "number"
+    },
+    "elevation_origin_m": {
+      "default": 0,
+      "title": "Elevation Origin M",
+      "type": "number"
+    },
+    "row_direction": {
+      "const": "north",
+      "default": "north",
+      "title": "Row Direction",
+      "type": "string"
+    },
+    "vertical_datum": {
+      "default": "unspecified",
+      "title": "Vertical Datum",
+      "type": "string"
+    }
+  },
+  "required": [
+    "nx",
+    "ny",
+    "dx_m",
+    "dy_m"
+  ],
+  "title": "Grid",
+  "type": "object"
+}

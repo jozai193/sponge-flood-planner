@@ -1,0 +1,27 @@
+# Product stabilization — 14 September 2026
+
+The production HLL model is frozen for this stabilization pass. Source identities are in `artifacts/verification/stabilization-v1/solver-freeze.json`; run `.venv/Scripts/python.exe scripts/verify_stabilization.py` to detect drift and recheck the saved export sets. Experimental graph solvers are not adopted.
+
+Map layers now initialize in stages, allowing paints between shader families. Current water remains present from the first stage. The app displays “Loading map detail” until all stages are ready. Three NVIDIA/Chrome prepared-data samples showed first observed controls changing from 2.94 to 1.78 seconds and the longest main-thread task from 1.246 to 0.547 seconds. Warm controls changed from 0.75–0.76 to 0.94–0.96 seconds; first full detail was drawn at 3.04 seconds. This redistributes initialization and does not establish faster total loading or solve all first-load stalls. Provider/API downloads, imagery and reboot-cold behavior are excluded.
+
+Paired replay caches layer generation across camera changes, keeps independent canvas lighting resources, and respects pixel quality. Balanced replay does not use dynamic shadows; High detail does. All 121 states were observed in both views in order. State-transition p95 was 155.8/157.6 ms and maximum 167.1/172.3 ms against a 150 ms target. GPU fence polling at RAF cadence is not display-presentation timing or a 60 FPS measurement. Early trial instrumentation missed state zero; the final recorder is installed before navigation and excludes user idle time before Play.
+
+Planning/export checks reject invented assessment exclusions, validate exclusions against the candidate catalogue, and reject inconsistent candidate cost/eligibility/source claims. Compiler checks still reject water, buildings, overlap, unverified eligibility and budget violations. Costs remain assumptions; maintenance and monetary damage valuations are unavailable. Portable scenario JSON now carries explicit validation status, also visible in the app and report.
+
+Prepared Philadelphia browser checks exercised the eligibility checkbox, over-budget rejection, a manual comparison, a two-subset search, all five download buttons and restoration. Each set contains four checksum-matched files. A $10,000 design covering 25 cells retains its cost once per design. Rerunning the manual export reproduced final depths and peaks exactly on the same Chrome/NVIDIA device. The functional fixture was a two-second synthetic rain plus two-second recession, not a realistic event or performance workload.
+
+49 TypeScript tests, typecheck and production build passed. The existing large-bundle warning remains. The prior 227 Python tests were not rerun because physics sources were unchanged. All five frozen physics hashes match.
+
+The original measurements ran while API and Docker Engine were offline, so they supplied session and prepared bundle data explicitly. The follow-up below verifies live services separately; it does not change the performance measurement conditions. Clean installation, demo video and submission remain paused at the user's request. General real-world flood accuracy and defensible costs and valuation remain unfinished.
+
+## Docker recovery and live verification — 14 September
+
+Docker Desktop 4.90.0 failed before engine startup because its `sailor-ingest.sock` could not be accessed. The existing guarded `scripts/Repair-DockerSockets.ps1` preserved and recreated only runtime socket directories. Engine 29.7.2 returned with four existing containers, nine images and the SPONGE data volumes. PostgreSQL and Redis are healthy; API readiness and worker execution pass. The web launch record was reconciled with the inspected existing Vite process. This is a recovery workaround, not a permanent upstream fix.
+
+11 existing Chrome browser tests passed: real sample loading, storm stop/resume, water-screening outage controls, live enrichment and ownership, rainfall import, report consistency and synthetic coastal export reproduction. Some tests deliberately mock provider failures or use synthetic numerical fixtures; those do not establish provider availability.
+
+`scripts/verify_live_recovery.py` separately exercised real authenticated API, database and queue calls without mocked routes. A fresh preparation job produced 688 buildings, six byte-matched terrain arrays, landscape coverage, an audit and an imagery descriptor; one external tile returned JPEG bytes. Request deduplication and other-session denial passed. Existing provider caches were retained, so this is not an uncached acquisition benchmark.
+
+The live browser imported a declared synthetic 20-second rainfall / 10-second recession survey through the API, added one assumed candidate, ran both planner subsets and downloaded all five artifacts. The candidate slightly worsened the screening score, so the planner correctly selected no construction at $0. Four manifest checksums passed; comparison restoration, final replay state and independent exported-input reruns passed. Baseline and planned depths and peaks reproduced exactly on the same device. Evidence is in `live-verification.json`, `live-api.json`, `live-browser-tests.log`, `live-planner.log`, `live-export-rerun.log` and `live-export-set` beside the original report.
+
+Evidence: `artifacts/verification/stabilization-v1/report.html`, `verification.json`, both export directories, and `output/playwright/stabilization-planner.png`.

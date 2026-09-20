@@ -1,0 +1,27 @@
+import {test,expect} from '@playwright/test';
+test('an active storm survives reload without pressing Stop',async({page})=>{
+ await page.goto('/');
+ await expect(page.getByRole('heading',{name:'Spring Garden, Philadelphia'})).toBeVisible({timeout:30000});
+ await page.getByLabel('Duration',{exact:true}).selectOption('360');
+ await page.getByRole('button',{name:'Run storm',exact:true}).click();
+ await expect(page.getByText(/Automatic recovery saved at/)).toBeVisible({timeout:60000});
+ const firstSave=await page.getByText(/Automatic recovery saved at/).innerText();
+ const savedTime=Number(firstSave.match(/at (\d+)/)![1]);
+ expect(savedTime).toBeGreaterThan(0);
+ await expect(page.getByText(/Automatic recovery saved at/)).not.toHaveText(firstSave,{timeout:45000});
+ const latestSave=await page.getByText(/Automatic recovery saved at/).innerText();
+ const latestTime=Number(latestSave.match(/at (\d+)/)![1]);
+ expect(latestTime).toBeGreaterThan(savedTime);
+ await expect(page.getByRole('button',{name:'Stop simulation'})).toBeVisible();
+ await page.reload();
+ await expect(page.getByRole('button',{name:'Restore saved storm'})).toBeEnabled({timeout:30000});
+ await page.getByRole('button',{name:'Restore saved storm'}).click();
+ await expect(page.getByText(/Saved storm restored/)).toContainText('Resume to continue from');
+ await page.getByRole('button',{name:'Resume stopped storm'}).click();
+ await expect(page.getByText(/Automatic recovery saved at/)).toBeVisible({timeout:60000});
+ const resumed=await page.getByText(/Automatic recovery saved at/).innerText();
+ expect(Number(resumed.match(/at (\d+)/)![1])).toBeGreaterThan(latestTime);
+ await page.getByRole('button',{name:'Stop simulation'}).click();
+ await expect(page.getByText('Stopped storm saved on this browser.',{exact:true})).toBeVisible({timeout:30000});
+ await expect(page.getByRole('alert')).toHaveCount(0);
+});

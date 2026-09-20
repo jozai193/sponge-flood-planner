@@ -1,0 +1,22 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "buildings": {
+      "default": true,
+      "title": "Buildings",
+      "type": "boolean"
+    },
+    "landcover": {
+      "default": false,
+      "title": "Landcover",
+      "type": "boolean"
+    },
+    "accept_exploratory_materials": {
+      "default": false,
+      "title": "Accept Exploratory Materials",
+      "type": "boolean"
+    }
+  },
+  "title": "ApplyEvidenceRequest",
+  "type": "object"
+}

@@ -1,0 +1,58 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "maxLength": 300,
+      "minLength": 3,
+      "title": "Title",
+      "type": "string"
+    },
+    "attribution": {
+      "maxLength": 500,
+      "minLength": 3,
+      "title": "Attribution",
+      "type": "string"
+    },
+    "observed_at": {
+      "format": "date-time",
+      "title": "Observed At",
+      "type": "string"
+    },
+    "horizontal_crs": {
+      "title": "Horizontal Crs",
+      "type": "string"
+    },
+    "vertical_datum": {
+      "maxLength": 200,
+      "minLength": 2,
+      "title": "Vertical Datum",
+      "type": "string"
+    },
+    "license": {
+      "maxLength": 300,
+      "minLength": 2,
+      "title": "License",
+      "type": "string"
+    },
+    "provenance": {
+      "enum": [
+        "surveyed",
+        "provider_estimate",
+        "user_assumption"
+      ],
+      "title": "Provenance",
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "attribution",
+    "observed_at",
+    "horizontal_crs",
+    "vertical_datum",
+    "license",
+    "provenance"
+  ],
+  "title": "SurveySource",
+  "type": "object"
+}

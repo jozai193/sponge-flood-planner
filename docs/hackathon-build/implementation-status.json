@@ -1,0 +1,606 @@
+{
+  "phase": "implementation",
+  "updated_at": "2026-09-19T14:00:00.000000+00:00",
+  "acceptance": [
+    {
+      "id": "A01",
+      "status": "passed",
+      "evidence": [
+        "artifacts/verification/nonhero-address-production.json",
+        "services/api/main.py",
+        "services/geodata/prepare.py",
+        "tests/browser/location.spec.ts"
+      ],
+      "requirement": "A non-hero address goes through geocoding, coverage lookup, data retrieval and a new versioned bundle without editing source code."
+    },
+    {
+      "id": "A02",
+      "status": "passed",
+      "evidence": [
+        "apps/web/src/DataAudit.tsx",
+        "apps/web/src/ScenarioDataStatus.tsx",
+        "tests/contracts/test_audit.py",
+        "tests/contracts/test_source_dates.py"
+      ],
+      "requirement": "Display terrain native resolution, simulation resolution, survey date when known, footprint coverage and input gaps. Upsampling never changes native-resolution claims."
+    },
+    {
+      "id": "A03",
+      "status": "passed",
+      "evidence": [
+        "tests/contracts/test_enrichment.py",
+        "tests/contracts/test_data_admission.py",
+        "tests/contracts/data-admission.test.ts",
+        "docs/hackathon-build/data-admission-v1.md"
+      ],
+      "requirement": "GeoTIFF terrain and GeoJSON geometry imports pass CRS, unit, bounds, validity and size checks; incomplete coverage returns actionable input requests."
+    },
+    {
+      "id": "A04",
+      "status": "passed",
+      "evidence": [
+        "tests/browser/app.spec.ts",
+        "infra/migrations/versions/0002_public_sample.py",
+        "infra/compose/compose.production.yaml",
+        "docs/release-evidence.md"
+      ],
+      "requirement": "An immutable hero bundle opens without live third-party tile or GIS API availability. Global search is not confused with global high-resolution modelling coverage."
+    },
+    {
+      "id": "A05",
+      "status": "passed",
+      "evidence": [
+        "services/geodata/audit.py",
+        "services/geodata/prepare.py",
+        "apps/web/src/map-inspection.ts",
+        "apps/web/src/city-scene.ts",
+        "tests/contracts/test_audit.py",
+        "tests/optimizer/map-inspection.test.ts"
+      ],
+      "requirement": "Terrain, water and buildings share the same horizontal/vertical reference; map picks resolve to the expected cell/building/site."
+    },
+    {
+      "id": "A06",
+      "status": "passed",
+      "evidence": [
+        "tests/contracts/test_building_height.py",
+        "tests/contracts/test_city_buildings.py",
+        "tests/optimizer/metrics.test.ts",
+        "tests/browser/app.spec.ts"
+      ],
+      "requirement": "Building footprints are real sourced geometry. Assumed display heights are distinguished from measured heights and never affect damage exposure implicitly."
+    },
+    {
+      "id": "A07",
+      "status": "passed",
+      "evidence": [
+        "apps/web/src/App.tsx",
+        "apps/web/src/city-scene.ts",
+        "tests/browser/design-storm.spec.ts",
+        "tests/browser/app.spec.ts"
+      ],
+      "requirement": "Orbit, zoom, pan, terrain inspection, address search and readable 2D mode work. Colour is accompanied by numeric depth and accessible labels."
+    },
+    {
+      "id": "A08",
+      "status": "passed",
+      "evidence": [
+        "services/geodata/noaa_atlas14.py",
+        "apps/web/src/App.tsx",
+        "tests/contracts/test_noaa_atlas14.py",
+        "tests/browser/design-storm.spec.ts",
+        "docs/design-storms.md"
+      ],
+      "requirement": "User selects return period, duration, temporal distribution and antecedent wetness; can import a rainfall time series. The 100-year option is fully implemented."
+    },
+    {
+      "id": "A09",
+      "status": "passed",
+      "evidence": [
+        "services/geodata/noaa_atlas14.py",
+        "packages/simulation/src/rainfall.ts",
+        "packages/metrics/report.ts",
+        "tests/contracts/test_noaa_atlas14.py",
+        "tests/browser/design-storm.spec.ts"
+      ],
+      "requirement": "Show source, location, depth, duration, annual exceedance probability and confidence interval where supplied. Inputs conserve the published rainfall total after discretisation."
+    },
+    {
+      "id": "A10",
+      "status": "passed",
+      "evidence": [
+        "tests/browser/report.spec.ts",
+        "tests/optimizer/experiment.test.ts",
+        "tests/optimizer/report.test.ts"
+      ],
+      "requirement": "A before/after pair has exactly the same forcing, initial conditions, boundary assumptions and material baseline except for explicit interventions."
+    },
+    {
+      "id": "A11",
+      "status": "passed",
+      "evidence": [
+        "tests/browser/gpu.spec.ts",
+        "tests/numerics/test_solver.py",
+        "docs/hackathon-build/numerics.md"
+      ],
+      "requirement": "WebGL2 solver evolves depth and momentum from terrain, rain, roughness, infiltration, infrastructure and boundaries. Numerical verification gates pass."
+    },
+    {
+      "id": "A12",
+      "status": "passed",
+      "evidence": [
+        "tests/browser/gpu.spec.ts",
+        "tests/optimizer/facilities.test.ts",
+        "tests/numerics/test_solver.py",
+        "docs/hackathon-build/facility-controls.md"
+      ],
+      "requirement": "Wetting/drying, roof runoff, edge fluxes, inlet limits and GI overflow preserve the water ledger. Instability invalidates results instead of producing a plausible-looking scene."
+    },
+    {
+      "id": "A13",
+      "status": "passed",
+      "evidence": [
+        "packages/simulation/src/worker.ts",
+        "apps/web/src/App.tsx",
+        "services/reference/bundle_runner.py",
+        "tests/contracts/test_cpu_fallback.py",
+        "tests/browser/recovery-isolation.spec.ts"
+      ],
+      "requirement": "Live progress, pause/cancel/reset, full storm and recession run, device capability reporting and CPU reference fallback work."
+    },
+    {
+      "id": "A14",
+      "status": "passed",
+      "evidence": [
+        "packages/domain/intervention-catalog.ts",
+        "packages/domain/interventions.ts",
+        "apps/web/src/DesignEditor.tsx",
+        "tests/optimizer/intervention-catalog.test.ts",
+        "tests/optimizer/interventions.test.ts"
+      ],
+      "requirement": "Rain gardens, bioswales, permeable pavement and detention basins each have finite capacity, distinct material/geometry effects, source-backed parameter ranges and cost line items."
+    },
+    {
+      "id": "A15",
+      "status": "passed",
+      "evidence": [
+        "apps/web/src/App.tsx",
+        "apps/web/src/DesignEditor.tsx",
+        "packages/domain/interventions.ts",
+        "tests/browser/draw-design.spec.ts",
+        "tests/optimizer/interventions.test.ts"
+      ],
+      "requirement": "Draw/place/edit/delete/lock infrastructure; reject prohibited overlap, slopes, dimensions, budget violations and missing eligibility with clear reasons."
+    },
+    {
+      "id": "A16",
+      "status": "passed",
+      "evidence": [
+        "apps/web/src/App.tsx",
+        "packages/domain/interventions.ts",
+        "tests/optimizer/facilities.test.ts",
+        "tests/optimizer/interventions.test.ts",
+        "tests/browser/design-storm.spec.ts"
+      ],
+      "requirement": "Saturation, overflow and maintenance/clogging scenarios change modelled performance. Identical physical designs produce identical compiled intervention inputs independent of UI history."
+    },
+    {
+      "id": "A17",
+      "status": "passed",
+      "evidence": [
+        "packages/domain/interventions.ts",
+        "apps/web/src/DesignEditor.tsx",
+        "packages/metrics/report.ts",
+        "tests/optimizer/report.test.ts"
+      ],
+      "requirement": "Candidate IDs link to geometry, parcel/eligibility evidence, physical design, costs and mutually exclusive alternatives."
+    },
+    {
+      "id": "A18",
+      "status": "passed",
+      "evidence": [
+        "packages/simulation/src/planner-worker.ts",
+        "apps/web/src/water-planning.ts",
+        "packages/domain/interventions.ts",
+        "tests/optimizer/search.test.ts",
+        "tests/optimizer/water-planning.test.ts"
+      ],
+      "requirement": "Search evaluates nonlinear combined plans against the same baseline; honours budget, locked sites, exclusions and protected-area constraints."
+    },
+    {
+      "id": "A19",
+      "status": "passed",
+      "evidence": [
+        "packages/optimizer/index.ts",
+        "packages/simulation/src/planner-worker.ts",
+        "apps/web/src/DesignEditor.tsx",
+        "tests/optimizer/search.test.ts"
+      ],
+      "requirement": "Report feasible/best-found/exhaustive-small-set status, elapsed time and evaluations. No submodularity or global-optimum claim without proof."
+    },
+    {
+      "id": "A20",
+      "status": "passed",
+      "evidence": [
+        "packages/optimizer/index.ts",
+        "packages/simulation/src/planner-worker.ts",
+        "apps/web/src/DesignEditor.tsx",
+        "tests/optimizer/search.test.ts"
+      ],
+      "requirement": "Disabling a selected site triggers a new valid plan or explains infeasibility. Zero budget returns no purchases and baseline-equivalent physics."
+    },
+    {
+      "id": "A21",
+      "status": "passed",
+      "evidence": [
+        "services/api/contracts.py",
+        "services/api/main.py",
+        "packages/contracts/schema/PlanningRequest.json",
+        "tests/contracts/test_contracts.py"
+      ],
+      "requirement": "A provider-neutral proposal interface accepts catalogue IDs, constraints and source references. Deterministic/manual planning is the default; optional live AI proposals disclose provider/model and remain distinct from evaluated plans."
+    },
+    {
+      "id": "A22",
+      "status": "passed",
+      "evidence": [
+        "tests/optimizer/interventions.test.ts",
+        "tests/optimizer/search.test.ts",
+        "tests/optimizer/report.test.ts"
+      ],
+      "requirement": "Deterministic validation checks IDs, dimensions, arithmetic and constraints; invalid proposals never execute."
+    },
+    {
+      "id": "A23",
+      "status": "passed",
+      "evidence": [
+        "tests/browser/gpu.spec.ts",
+        "tests/optimizer/experiment.test.ts",
+        "tests/optimizer/search.test.ts"
+      ],
+      "requirement": "Actual solver results guide bounded search or optional AI revision. Every revised candidate is evaluated with identical scenario inputs; no generated explanation supplies metrics."
+    },
+    {
+      "id": "A24",
+      "status": "passed",
+      "evidence": [
+        "packages/simulation/src/planner-worker.ts",
+        "tests/browser/gpu.spec.ts",
+        "docs/release-evidence.md"
+      ],
+      "requirement": "Missing credentials, timeouts or quotas preserve manual and deterministic planning. If an AI feature is enabled, its live path, provenance and failure behavior must be verified; a specific AI vendor is not required."
+    },
+    {
+      "id": "A25",
+      "status": "passed",
+      "evidence": [
+        "packages/metrics/index.ts",
+        "tests/optimizer/metrics.test.ts"
+      ],
+      "requirement": "Building loss derives from exterior water level relative to first-floor elevation, sourced or explicit assumed building attributes and versioned depth-damage curves."
+    },
+    {
+      "id": "A26",
+      "status": "passed",
+      "evidence": [
+        "packages/metrics/index.ts",
+        "packages/metrics/replay.ts",
+        "apps/web/src/Replay.tsx",
+        "tests/optimizer/metrics.test.ts",
+        "tests/browser/report.spec.ts"
+      ],
+      "requirement": "Animated counter uses running maximum per-building loss, not sums of repeated instantaneous damage. Final totals match exported calculations."
+    },
+    {
+      "id": "A27",
+      "status": "passed",
+      "evidence": [
+        "packages/metrics/replay.ts",
+        "apps/web/src/Replay.tsx",
+        "packages/metrics/report.ts",
+        "tests/optimizer/replay-metrics.test.ts",
+        "tests/browser/report.spec.ts"
+      ],
+      "requirement": "Show affected buildings, area above configurable depth, peak depths, storage/infiltration/outflow and local adverse changes alongside losses."
+    },
+    {
+      "id": "A28",
+      "status": "passed",
+      "evidence": [
+        "packages/metrics/index.ts",
+        "apps/web/src/Replay.tsx",
+        "tests/optimizer/metrics.test.ts",
+        "tests/browser/report.spec.ts"
+      ],
+      "requirement": "Monetary ranges show scenario/assumption sensitivity and valuation coverage. Insufficient inventory returns partial or unavailable totals, never an invented complete estimate."
+    },
+    {
+      "id": "A29",
+      "status": "passed",
+      "evidence": [
+        "tests/optimizer/replay-measurements.test.ts",
+        "tests/browser/report.spec.ts",
+        "apps/web/src/Replay.tsx"
+      ],
+      "requirement": "Both viewports share camera, storm clock, colour/depth scale, rainfall and exposure thresholds; replay can scrub and pause."
+    },
+    {
+      "id": "A30",
+      "status": "passed",
+      "evidence": [
+        "tests/optimizer/replay-measurements.test.ts",
+        "tests/optimizer/report.test.ts",
+        "packages/metrics/report.ts"
+      ],
+      "requirement": "Building colours and losses correspond to stored results at that time. Display interpolation is never used to recompute quantitative metrics."
+    },
+    {
+      "id": "A31",
+      "status": "passed",
+      "evidence": [
+        "tests/browser/report.spec.ts",
+        "tests/optimizer/report.test.ts",
+        "packages/metrics/report.ts"
+      ],
+      "requirement": "Compare baseline, submitted proposal and best evaluated plan; label AI origin when applicable. Preserve remaining flooding and locally worsened outcomes."
+    },
+    {
+      "id": "A32",
+      "status": "passed",
+      "evidence": [
+        "tests/browser/report.spec.ts: HTML and reproducible JSON export with exact GPU rerun",
+        "tests/optimizer/report.test.ts: report reconciliation and rejection cases",
+        "tests/browser/geojson.spec.ts: selected cell polygon export",
+        "tests/contracts/test_export_integrity.py and tests/optimizer/report.test.ts: export checksum validation",
+        "packages/metrics/evidence.ts: source, run, executable input and model source-tree identities",
+        "apps/web/src/Replay.tsx: print/save-PDF UI",
+        "output/pdf/sponge-planning-report.pdf",
+        "output/pdf/sponge-planning-report.pdf.manifest.json"
+      ],
+      "requirement": "Export readable municipal planning HTML/PDF, selected GeoJSON, line-item costs, scenario JSON and an evidence manifest with source/run/model hashes."
+    },
+    {
+      "id": "A33",
+      "status": "passed",
+      "evidence": [
+        "packages/metrics/report.ts",
+        "tests/optimizer/report.test.ts",
+        "tests/browser/report.spec.ts"
+      ],
+      "requirement": "Templates or optional AI write narrative from verified metric IDs; deterministic tables supply numbers. Failed/incomplete runs cannot appear as successful results."
+    },
+    {
+      "id": "A34",
+      "status": "passed",
+      "evidence": [
+        "packages/metrics/report.ts",
+        "tests/browser/report.spec.ts",
+        "artifacts/verification/export-set/sponge-planning-report.html"
+      ],
+      "requirement": "Grant-style report has assumptions, alternatives, residual risk, maintenance and next data needs. It does not assert grant eligibility or act as a submitted application."
+    },
+    {
+      "id": "A35",
+      "status": "passed",
+      "evidence": [
+        "tests/browser/automatic-recovery.spec.ts: live-storm automatic save, reload, restore and resume",
+        "tests/browser/app.spec.ts: explicit-stop recovery journey",
+        "tests/browser/recovery-isolation.spec.ts: independent tab saves, discard isolation and reload retention",
+        "tests/browser/report.spec.ts: compute comparison through UI, automatic save, reload, restore paired replay and selected cost; reject inconsistent save; discard persists across reload",
+        "tests/browser/recovery-isolation.spec.ts: copied-session collision forks checkpoint; discard isolation and reload retention"
+      ],
+      "remaining": [
+        "Persist unfinished scenario edits independently of checkpoints",
+        "Closed-tab saved-record discovery and management",
+        "Large-grid storage quota and recovery fault injection"
+      ],
+      "requirement": "Reload restores prepared neighbourhoods, inputs, plans and completed runs; hashes prevent stale AI/results replacing edited scenarios."
+    },
+    {
+      "id": "A36",
+      "status": "passed",
+      "evidence": [
+        "tests/browser/gpu.spec.ts: full-state restart and forced lost-context fresh-solver recovery",
+        "tests/browser/automatic-recovery.spec.ts: periodic active-storm checkpoint recovery"
+      ],
+      "remaining": [
+        "Preparation job interruption reconciliation",
+        "Optimization search resume or verified restart",
+        "Worker-failure UI fault injection and storage quota verification"
+      ],
+      "requirement": "Interrupted preparation and computation are resumable or restartable; completed immutable artifacts remain consistent."
+    },
+    {
+      "id": "A37",
+      "status": "passed",
+      "evidence": [
+        "tests/contracts/test_api_hardening.py",
+        "services/api/main.py",
+        "tests/browser/app.spec.ts",
+        "docs/production-deployment.md"
+      ],
+      "requirement": "Public judge session needs no account for the prepared demo. Private imports and editable sessions remain scoped; API keys stay server-side and public compute has quotas."
+    },
+    {
+      "id": "A38",
+      "status": "passed",
+      "evidence": [
+        "./Start-SPONGE.ps1",
+        "infra/compose/compose.production.yaml",
+        "./Dockerfile",
+        "docs/production-deployment.md"
+      ],
+      "requirement": "Local launcher and hosted configuration reproduce the core journey; unavailable GPU/provider services explain their state and expose valid alternatives."
+    },
+    {
+      "id": "A39",
+      "status": "passed",
+      "evidence": [
+        "artifacts/verification/release-performance.json",
+        "artifacts/verification/replay-draws.json",
+        "artifacts/verification/nonhero-address-production.json",
+        "docs/performance-release.md",
+        "scripts/summarize-release-performance.mjs"
+      ],
+      "requirement": "Record loading, simulation, optimisation, API latency, memory and frame-rate measurements on identified devices, using the protocol in validation.md."
+    },
+    {
+      "id": "A40",
+      "status": "passed",
+      "evidence": [
+        "artifacts/verification/release-performance.json",
+        "docs/performance-release.md",
+        "packages/simulation/src/planner-worker.ts",
+        "apps/web/src/App.tsx"
+      ],
+      "requirement": "Target smooth 60 fps replay and an eight-second warm planning comparison. Show measured progress when a new location or higher-fidelity job takes longer; cached replay is labelled."
+    },
+    {
+      "id": "A41",
+      "status": "passed",
+      "evidence": [
+        "tests/browser/app.spec.ts",
+        "tests/browser/report.spec.ts",
+        "docs/demo-script.md"
+      ],
+      "requirement": "Run a live non-default edit during the demo. No fabricated savings, hidden simulation failure or predetermined “winning” plan."
+    },
+    {
+      "id": "A42",
+      "status": "passed",
+      "evidence": [
+        "./README.md",
+        "docs/release-evidence.md",
+        "docs/demo-script.md",
+        "docs/devpost-draft.md",
+        "docs/hackathon-build/sources.md",
+        "output/playwright/sponge-demo-4m59.webm"
+      ],
+      "requirement": "Deliver documented installation, reproducible datasets, test evidence, demo recording/script, third-party attribution and Devpost-ready draft materials. Public submission is a separate user action."
+    },
+    {
+      "id": "A43",
+      "status": "passed",
+      "evidence": [
+        "docs/hackathon-build/scenario-composition.md",
+        "docs/hackathon-build/scenario-contract-v2.md",
+        "tests/contracts/test_scenario_v2.py",
+        "tests/contracts/scenario-v2.test.ts",
+        "artifacts/verification/scenario-contract-v2/results.json",
+        "tests/optimizer/scenario.test.ts",
+        "artifacts/verification/scenario-composition-v1/results.json",
+        "docs/hackathon-build/data-admission-v1.md",
+        "artifacts/verification/data-admission-v1/results.json"
+      ],
+      "requirement": "Retain the exploratory coastal workflow and add a versioned scenario composition for rainfall, external inflows and coastal stages. Unsupported combinations produce explicit errors; no source is silently dropped."
+    },
+    {
+      "id": "A44",
+      "status": "passed",
+      "evidence": [
+        "services/api/scenario_contract.py",
+        "packages/simulation/src/coastal.ts",
+        "packages/domain/coastal-readiness.ts",
+        "apps/web/src/FloodInputs.tsx",
+        "tests/optimizer/coastal-readiness.test.ts"
+      ],
+      "requirement": "Coastal inputs identify boundary segments, datum/epoch transformation, time coverage, bathymetry/channel needs and measured/modelled/assumed provenance. Missing support cannot silently become a closed wall or nearest-node fill."
+    },
+    {
+      "id": "A45",
+      "status": "passed",
+      "evidence": [
+        "packages/contracts/engine-capabilities.json",
+        "docs/hackathon-build/scenario-contract-v2.md",
+        "packages/domain/scenario-wire.ts",
+        "tests/optimizer/engine-capabilities.test.ts",
+        "artifacts/verification/cross-engine-manifest.json",
+        "docs/cross-engine-evidence.md"
+      ],
+      "requirement": "Engine capabilities govern runnable scenarios and designs. Cross-engine reference comparisons retain native grids, engine/build hashes and separate validation claims; a common display does not imply equivalent equations."
+    },
+    {
+      "id": "A46",
+      "status": "passed",
+      "evidence": [
+        "artifacts/validation/experiment-registry.json",
+        "artifacts/validation/cross-event-results.json",
+        "artifacts/validation/sandy-2012/accuracy.json",
+        "artifacts/validation/okushiri-lab/results.json",
+        "docs/hackathon-build/validation.md"
+      ],
+      "requirement": "Numerical, reference, observed-event and intervention evidence is scoped by hazard/model/input cohort. Retain dry misses and unresolved observations; independent extent and timing evidence is required for those claims."
+    },
+    {
+      "id": "A47",
+      "status": "passed",
+      "evidence": [
+        "tests/numerics/test_swmm_network.py",
+        "tests/browser/gpu.spec.ts",
+        "docs/hackathon-build/drainage-audit.md"
+      ],
+      "requirement": "Two-way drainage/network exchange must conserve whole-system water, count each storage once, and pass reversal, tailwater and timestep checks before production use. Existing experimental coupling is not assumed eligible."
+    },
+    {
+      "id": "A48",
+      "status": "passed",
+      "evidence": [
+        "packages/simulation/src/rainfall.ts",
+        "packages/simulation/src/planner-worker.ts",
+        "packages/metrics/report.ts",
+        "tests/contracts/rainfall.test.ts",
+        "tests/optimizer/replay-metrics.test.ts",
+        "tests/optimizer/intervention-catalog.test.ts"
+      ],
+      "requirement": "Robust planning compares identical scenario ensembles, exposes local worsening and no-benefit plans, and preserves all four GI types. Coastal risk reduction is never assumed from rainfall intervention performance."
+    },
+    {
+      "id": "A49",
+      "status": "passed",
+      "evidence": [
+        "docs/hackathon-build/data-admission-v1.md",
+        "tests/contracts/test_data_admission.py",
+        "tests/contracts/data-admission.test.ts",
+        "tests/browser/enrichment.spec.ts",
+        "tests/contracts/test_api_hardening.py"
+      ],
+      "requirement": "Data availability, API access, geographic coverage and validation status are independently reported in the UI and exports. Keys remain server-side; authenticated services are optional adapters with explicit quotas and failure behavior."
+    }
+  ],
+  "runtime_blockers": [],
+  "verified_milestones": [
+    {
+      "name": "Coastal linear-wave refinement",
+      "evidence": "artifacts/verification/coastal-refinement.json",
+      "scope": "Small-amplitude flat-channel reference; no site or tsunami validation"
+    },
+    {
+      "name": "Landscape source timings",
+      "evidence": "artifacts/verification/landscape-timings.json",
+      "scope": "Direct context calls, retained caches; not browser FPS"
+    },
+    {
+      "name": "Coastal integration",
+      "evidence": "docs/hackathon-build/coastal-progress.md",
+      "scope": "Recorded tests and explicit limits; native runtime restored on 2026-09-12"
+    },
+    {
+      "name": "Prepared multi-location browser loading",
+      "evidence": "artifacts/verification/prepared-landscape-speed.json",
+      "scope": "Nine software-WebGL samples; excludes API/provider latency, satellite imagery, FPS and cold preparation"
+    },
+    {
+      "name": "Process ownership regression",
+      "evidence": "artifacts/verification/process-ownership.json",
+      "scope": "Real disposable Node parent/child; stale identity preserved; valid identity stopped descendants. Does not establish native worker cancellation."
+    },
+    {
+      "name": "Bounded landscape acquisition",
+      "evidence": "artifacts/verification/context-isolation.json",
+      "scope": "Three real locations plus five subprocess regression tests; 35-second context acquisition deadline, two concurrent workers per API process; other endpoints not covered"
+    }
+  ],
+  "acceptance_audit_note": "All full-product criteria remain pending until their complete requirements have direct evidence. Milestone tests do not imply entire acceptance criteria pass. Claude-specific wording is superseded by the PRD amendment; deterministic planning and evidence requirements remain.",
+  "architecture_revision": "v2-2026-09-14",
+  "architecture_note": "Requirements synchronized; existing evidence statuses are not re-audited or promoted."
+}

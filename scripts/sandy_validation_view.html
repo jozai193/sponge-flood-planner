@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>Sandy 2012 — SPONGE measured-event check</title>
+<style>
+body{font:16px/1.55 system-ui;margin:0;background:#f5f4ee;color:#15383e}main{max-width:1100px;margin:auto;padding:30px}h1{font-size:30px;margin:0}h2{font-size:21px}.notice{border-left:5px solid #c2752b;background:#fff0d7;padding:14px}.controls{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin:20px 0}button,select{font:inherit;padding:7px 12px}input[type=range]{flex:1;min-width:160px}.map{display:grid;grid-template-columns:minmax(0,2fr) minmax(240px,1fr);gap:24px}canvas{width:100%;background:#ece8d9;border:1px solid #9daaa9}dl{margin:0}dt{margin-top:14px;color:#486065}dd{font-size:22px;margin:0}small{color:#486065}table{border-collapse:collapse;width:100%;font-size:13px}td,th{text-align:left;padding:9px;border-bottom:1px solid #ccd2cb}th{background:#e5ebe6}.table{overflow:auto}a{color:#006b85}img{width:100%}@media(max-width:700px){.map{display:block}main{padding:16px}}.legend span{margin-right:15px}#detail{min-height:3em}
+</style>
+<main>
+<h1>Hurricane Sandy, New York City — 2012</h1>
+<p>Battery Park City / Hudson waterfront · measured NOAA boundary levels · independent USGS high-water marks</p>
+<p class="notice"><strong>Retrospective screening test, not a validated hazard prediction.</strong> Post-event terrain and current buildings do not recreate 2012 conditions. Rainfall, waves, sewers and underground flooding are omitted. No design intervention was applied.</p>
+<div class="controls"><label>Grid <select id="grid"></select></label><button id="play">Play computed snapshots</button><input id="time" aria-label="Computed event time" type="range" min="0" max="120" value="0"><label><input id="peak" type="checkbox"> Show peak depths</label></div>
+<p id="timestamp"></p>
+<div class="map"><div><canvas id="map" width="800" height="800" aria-label="North-up flood depth grid and high-water mark locations"></canvas><p class="legend">North ↑ · domain 1 km × 1 km<br><span>Grey: building cells</span><span>Tan: dry ground</span><span>Blue: water, pale 0–dark ≥3 m</span><br>Observation crosses mark sampled cells: green = compared; orange = model dry; purple = unresolved. Click one to inspect its record.</p></div><div><h2>Peak-observation assessment</h2><dl id="metrics"></dl><p id="detail">Select an observation on the map.</p><p><small>Errors describe only comparable wet cells. Dry misses and unresolved cells are separate. Multiple marks can share a site; nine marks are not nine independent neighbourhoods.</small></p><p><small>Playback changes the displayed saved timestep; it does not rerun or accelerate the physical simulation. Display depths are rounded to 0.1 mm; numerical assessment uses original outputs.</small></p></div></div>
+<h2>Every observation, including exclusions</h2><div class="table"><table><thead><tr><th>USGS ID</th><th>Quality</th><th>Observed m NAVD88</th><th>Model m NAVD88</th><th>Error m</th><th>Assessment</th></tr></thead><tbody id="observations"></tbody></table></div>
+<h2>Measured forcing and point comparison</h2><img src="forcing-and-errors.png" alt="Measured Battery water-level history and observed versus simulated peak water elevations">
+<h2>Limits of this test</h2><ul id="limits"></ul>
+<p><a href="accuracy.json">Full assessment</a> · <a href="protocol.json">Frozen method and inputs</a> · <a href="source-checksums.json">Source checksums</a> · <a href="https://stn.wim.usgs.gov/STNServices/Events/24/HWMs.json">USGS observations</a> · <a href="https://api.tidesandcurrents.noaa.gov/api/prod/">NOAA API documentation</a></p>
+</main>
+<script>
+const data=/*VALIDATION_DATA*/;
+const grid=document.getElementById('grid'),time=document.getElementById('time'),peak=document.getElementById('peak'),canvas=document.getElementById('map'),ctx=canvas.getContext('2d');
+let timer=null;
+const fmt=v=>v===null||v===undefined?'—':Number(v).toFixed(3);
+for(const r of data.runs){const o=document.createElement('option');o.value=r.n;o.textContent=`${r.n} × ${r.n} (${(1000/r.n).toFixed(2)} m)`;grid.append(o);}
+grid.value=data.runs.at(-1).n;
+for(const text of data.protocol.limitations){const li=document.createElement('li');li.textContent=text;document.getElementById('limits').append(li);}
+function current(){return data.runs.find(r=>r.n===Number(grid.value));}
+function refresh(){
+ const r=current(),f=Math.min(Number(time.value),r.times.length-1),depth=peak.checked?r.peak:r.depths[f],cell=800/r.n;
+ time.max=r.times.length-1;
+ ctx.clearRect(0,0,800,800);
+ for(let y=0;y<r.n;y++)for(let x=0;x<r.n;x++){
+  const i=y*r.n+x,h=depth[i],t=Math.min(h/3,1);
+  ctx.fillStyle=r.solid[i]?'#565d5e':h<=.01?'#ece8d9':`rgb(${Math.round(190-175*t)},${Math.round(230-140*t)},${Math.round(241-100*t)})`;
+  ctx.fillRect(x*cell,(r.n-1-y)*cell,cell+.3,cell+.3);
+ }
+ for(const o of r.result.samples){if(o.status==='outside_domain')continue;
+  const x=(o.col+.5)*cell,y=800-(o.row+.5)*cell;
+  ctx.strokeStyle=o.status==='compared'?'#157536':o.status==='observed_flood_model_dry'?'#c24b00':'#860c91';ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(x-5,y-5);ctx.lineTo(x+5,y+5);ctx.moveTo(x-5,y+5);ctx.lineTo(x+5,y-5);ctx.stroke();
+  ctx.font='bold 13px system-ui';ctx.fillStyle=ctx.strokeStyle;ctx.fillText(o.observation_id,x+8,y-5);
+ }
+ const date=new Date(Date.parse(data.protocol.start_utc)+r.times[f]*1000).toISOString().replace('T',' ').replace('.000Z',' UTC');
+ document.getElementById('timestamp').textContent=peak.checked?'Peak depth at each cell over the entire 18 hours — not one simultaneous water surface':date;
+}
+function assessment(){const r=current(),a=r.result;
+ const metrics=document.getElementById('metrics');metrics.replaceChildren();
+ for(const [k,v] of [['Wet-cell RMSE',fmt(a.rmse_m)+' m'],['Comparable marks',a.compared_count+' / '+a.total_count],['Observed floods modelled dry',a.missed_flood_count],['Unresolved / other',a.total_count-a.compared_count-a.missed_flood_count],['Gauge-only reference RMSE',fmt(a.gauge_only_baseline.rmse_m)+' m'],['Maximum recorded mass residual',(100*a.max_recorded_relative_mass_residual).toFixed(5)+'%'],['Numerical mass gate',a.mass_gate_passed?'Passed':'FAILED — reject accuracy claim']]){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=k;dd.textContent=v;metrics.append(dt,dd);}
+ const tbody=document.getElementById('observations');tbody.replaceChildren();
+ for(const o of a.samples){const tr=document.createElement('tr');for(const v of [o.observation_id,o.quality_description,fmt(o.observed_elevation_m),fmt(o.predicted_elevation_m),fmt(o.error_m),o.status.replaceAll('_',' ')+(o.observation_below_model_ground?' · observation below model ground':'')]){const td=document.createElement('td');td.textContent=v;tr.append(td);}tbody.append(tr);}
+ refresh();
+}
+time.addEventListener('input',refresh);peak.addEventListener('change',refresh);grid.addEventListener('change',assessment);
+document.getElementById('play').onclick=()=>{const button=document.getElementById('play');if(timer){clearInterval(timer);timer=null;button.textContent='Play computed snapshots';return;}peak.checked=false;if(Number(time.value)>=Number(time.max))time.value=0;button.textContent='Pause';timer=setInterval(()=>{time.value=Number(time.value)+1;refresh();if(Number(time.value)>=Number(time.max)){clearInterval(timer);timer=null;button.textContent='Play computed snapshots';}},150);};
+canvas.onclick=e=>{const r=current(),box=canvas.getBoundingClientRect(),x=(e.clientX-box.left)*800/box.width,y=(e.clientY-box.top)*800/box.height,c=800/r.n;let best=null,d=40;for(const o of r.result.samples){const distance=Math.hypot(x-(o.col+.5)*c,y-(800-(o.row+.5)*c));if(distance<d){d=distance;best=o;}}if(best)document.getElementById('detail').textContent=`USGS ${best.observation_id}, site ${best.site_id}: ${best.location_description}. ${best.status.replaceAll('_',' ')}. Observed ${fmt(best.observed_elevation_m)} m NAVD88; current model ground ${fmt(best.ground_elevation_m)} m NAVD88.`;};
+assessment();
+</script></html>

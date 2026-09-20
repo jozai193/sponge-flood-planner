@@ -1,0 +1,196 @@
+{
+  "$defs": {
+    "RainInterval": {
+      "additionalProperties": false,
+      "properties": {
+        "start_s": {
+          "minimum": 0,
+          "title": "Start S",
+          "type": "number"
+        },
+        "end_s": {
+          "exclusiveMinimum": 0,
+          "title": "End S",
+          "type": "number"
+        },
+        "rate_m_s": {
+          "maximum": 0.001,
+          "minimum": 0,
+          "title": "Rate M S",
+          "type": "number"
+        }
+      },
+      "required": [
+        "start_s",
+        "end_s",
+        "rate_m_s"
+      ],
+      "title": "RainInterval",
+      "type": "object"
+    },
+    "Storm": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "sponge.v1",
+          "default": "sponge.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "duration_s": {
+          "exclusiveMinimum": 0,
+          "maximum": 172800,
+          "title": "Duration S",
+          "type": "number"
+        },
+        "recession_s": {
+          "maximum": 172800,
+          "minimum": 0,
+          "title": "Recession S",
+          "type": "number"
+        },
+        "depth_m": {
+          "maximum": 3,
+          "minimum": 0,
+          "title": "Depth M",
+          "type": "number"
+        },
+        "intervals": {
+          "items": {
+            "$ref": "#/$defs/RainInterval"
+          },
+          "maxItems": 10000,
+          "minItems": 1,
+          "title": "Intervals",
+          "type": "array"
+        },
+        "return_period_years": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Return Period Years"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        },
+        "distribution": {
+          "default": "user-supplied",
+          "title": "Distribution",
+          "type": "string"
+        },
+        "antecedent_saturation": {
+          "default": 0.25,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Antecedent Saturation",
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "duration_s",
+        "recession_s",
+        "depth_m",
+        "intervals"
+      ],
+      "title": "Storm",
+      "type": "object"
+    },
+    "SurveySource": {
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "maxLength": 300,
+          "minLength": 3,
+          "title": "Title",
+          "type": "string"
+        },
+        "attribution": {
+          "maxLength": 500,
+          "minLength": 3,
+          "title": "Attribution",
+          "type": "string"
+        },
+        "observed_at": {
+          "format": "date-time",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "horizontal_crs": {
+          "title": "Horizontal Crs",
+          "type": "string"
+        },
+        "vertical_datum": {
+          "maxLength": 200,
+          "minLength": 2,
+          "title": "Vertical Datum",
+          "type": "string"
+        },
+        "license": {
+          "maxLength": 300,
+          "minLength": 2,
+          "title": "License",
+          "type": "string"
+        },
+        "provenance": {
+          "enum": [
+            "surveyed",
+            "provider_estimate",
+            "user_assumption"
+          ],
+          "title": "Provenance",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "attribution",
+        "observed_at",
+        "horizontal_crs",
+        "vertical_datum",
+        "license",
+        "provenance"
+      ],
+      "title": "SurveySource",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "const": "rainfall",
+      "default": "rainfall",
+      "title": "Kind",
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/SurveySource"
+    },
+    "storm": {
+      "$ref": "#/$defs/Storm"
+    }
+  },
+  "required": [
+    "source",
+    "storm"
+  ],
+  "title": "RainfallSurvey",
+  "type": "object"
+}

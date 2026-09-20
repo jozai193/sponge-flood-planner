@@ -1,0 +1,53 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "longitude": {
+      "maximum": 180,
+      "minimum": -180,
+      "title": "Longitude",
+      "type": "number"
+    },
+    "latitude": {
+      "maximum": 80,
+      "minimum": -80,
+      "title": "Latitude",
+      "type": "number"
+    },
+    "extent_m": {
+      "default": 600,
+      "maximum": 2000,
+      "minimum": 100,
+      "title": "Extent M",
+      "type": "integer"
+    },
+    "grid_cells": {
+      "default": 128,
+      "maximum": 512,
+      "minimum": 32,
+      "title": "Grid Cells",
+      "type": "integer"
+    },
+    "source": {
+      "default": "auto",
+      "enum": [
+        "auto",
+        "terrarium",
+        "usgs_1m"
+      ],
+      "title": "Source",
+      "type": "string"
+    },
+    "label": {
+      "default": "Selected neighbourhood",
+      "maxLength": 160,
+      "title": "Label",
+      "type": "string"
+    }
+  },
+  "required": [
+    "longitude",
+    "latitude"
+  ],
+  "title": "PrepareRequest",
+  "type": "object"
+}

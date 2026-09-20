@@ -1,0 +1,20 @@
+import {test,expect} from '@playwright/test';
+test('queued location identifies offline worker, prevents duplicates and clears failed loading state',async({page})=>{
+ await page.goto('/');
+ await expect(page.getByRole('heading',{name:'Spring Garden, Philadelphia'})).toBeVisible({timeout:30000});
+ await page.route('**/api/v1/geocode',r=>r.fulfill({json:{locations:[{label:'Test location',longitude:81.8,latitude:25.4}]}}));
+ let posts=0,failed=false;
+ await page.route('**/api/v1/neighbourhoods',r=>{posts++;return r.fulfill({json:{id:'test-job',status:'queued'}});});
+ await page.route('**/api/v1/neighbourhoods/test-job',r=>r.fulfill({json:failed?{status:'failed',error:'Provider unavailable'}:{status:'queued',worker_available:false}}));
+ await page.getByLabel('Address',{exact:true}).fill('test');
+ await page.getByRole('button',{name:'Search',exact:true}).click();
+ await page.getByRole('button',{name:'Test location',exact:true}).click();
+ await expect(page.getByRole('status')).toContainText('Terrain worker is offline');
+ await expect(page.getByRole('button',{name:'Search',exact:true})).toBeDisabled();
+ await expect(page.getByLabel('Area width')).toBeDisabled();
+ await expect(page.getByRole('heading',{name:'Spring Garden, Philadelphia'})).toBeVisible();
+ failed=true;
+ await expect(page.getByRole('status')).toContainText('Location could not be loaded');
+ await expect(page.getByRole('button',{name:'Search',exact:true})).toBeEnabled();
+ expect(posts).toBe(1);
+});

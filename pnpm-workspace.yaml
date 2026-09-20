@@ -1,0 +1,15 @@
+packages:
+  - packages/*
+  - apps/*
+overrides:
+  image-size: 2.0.3
+  '@loaders.gl/core': 4.4.5
+  '@loaders.gl/draco': 4.4.5
+  '@loaders.gl/gltf': 4.4.5
+  '@loaders.gl/images': 4.4.5
+  '@loaders.gl/loader-utils': 4.4.5
+  '@loaders.gl/schema-utils': 4.4.5
+  '@loaders.gl/textures': 4.4.5
+  '@loaders.gl/worker-utils': 4.4.5
+onlyBuiltDependencies:
+  - esbuild

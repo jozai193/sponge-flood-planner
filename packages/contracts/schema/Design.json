@@ -1,0 +1,151 @@
+{
+  "$defs": {
+    "Intervention": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "rain_garden",
+            "bioswale",
+            "permeable_pavement",
+            "detention_basin"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "cells": {
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 100000,
+          "minItems": 1,
+          "title": "Cells",
+          "type": "array"
+        },
+        "excavation_m": {
+          "default": 0,
+          "maximum": 3,
+          "minimum": 0,
+          "title": "Excavation M",
+          "type": "number"
+        },
+        "conductivity_m_s": {
+          "default": 0,
+          "maximum": 0.001,
+          "minimum": 0,
+          "title": "Conductivity M S",
+          "type": "number"
+        },
+        "storage_depth_m": {
+          "default": 0,
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Storage Depth M",
+          "type": "number"
+        },
+        "roughness": {
+          "default": 0.08,
+          "exclusiveMinimum": 0,
+          "maximum": 0.5,
+          "title": "Roughness",
+          "type": "number"
+        },
+        "percolation_m_s": {
+          "default": 0,
+          "maximum": 0.001,
+          "minimum": 0,
+          "title": "Percolation M S",
+          "type": "number"
+        },
+        "cost_minor": {
+          "minimum": 0,
+          "title": "Cost Minor",
+          "type": "integer"
+        },
+        "eligibility": {
+          "default": "unverified",
+          "enum": [
+            "confirmed",
+            "user_assumed",
+            "unverified"
+          ],
+          "title": "Eligibility",
+          "type": "string"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "cells",
+        "cost_minor"
+      ],
+      "title": "Intervention",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "sponge.v1",
+      "default": "sponge.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "interventions": {
+      "items": {
+        "$ref": "#/$defs/Intervention"
+      },
+      "maxItems": 100,
+      "title": "Interventions",
+      "type": "array"
+    },
+    "budget_minor": {
+      "default": 200000000,
+      "minimum": 0,
+      "title": "Budget Minor",
+      "type": "integer"
+    },
+    "currency": {
+      "const": "USD",
+      "default": "USD",
+      "title": "Currency",
+      "type": "string"
+    },
+    "price_year": {
+      "default": 2026,
+      "maximum": 2100,
+      "minimum": 2000,
+      "title": "Price Year",
+      "type": "integer"
+    },
+    "locked_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Locked Ids",
+      "type": "array"
+    },
+    "excluded_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Excluded Ids",
+      "type": "array"
+    }
+  },
+  "title": "Design",
+  "type": "object"
+}

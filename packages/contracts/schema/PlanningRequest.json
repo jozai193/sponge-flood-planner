@@ -1,0 +1,66 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "bundle_id": {
+      "title": "Bundle Id",
+      "type": "string"
+    },
+    "candidate_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 200,
+      "title": "Candidate Ids",
+      "type": "array"
+    },
+    "budget_minor": {
+      "minimum": 0,
+      "title": "Budget Minor",
+      "type": "integer"
+    },
+    "locked_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Locked Ids",
+      "type": "array"
+    },
+    "excluded_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Excluded Ids",
+      "type": "array"
+    },
+    "source_references": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 200,
+      "title": "Source References",
+      "type": "array"
+    },
+    "intent": {
+      "default": "Reduce neighbourhood flooding",
+      "maxLength": 2000,
+      "title": "Intent",
+      "type": "string"
+    },
+    "evaluation_feedback": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "maxItems": 20,
+      "title": "Evaluation Feedback",
+      "type": "array"
+    }
+  },
+  "required": [
+    "bundle_id",
+    "candidate_ids",
+    "budget_minor"
+  ],
+  "title": "PlanningRequest",
+  "type": "object"
+}

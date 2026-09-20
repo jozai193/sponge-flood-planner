@@ -1,0 +1,44 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: 0.12.12
+          enable-cache: true
+      - run: pnpm install --frozen-lockfile
+      - run: uv sync --frozen
+      - run: pnpm audit --prod
+      - run: uv export --frozen --no-dev --format requirements-txt --output-file requirements-audit.txt
+      - run: uvx pip-audit --no-deps --disable-pip -r requirements-audit.txt
+      - run: pnpm test
+      - run: pnpm build
+      - run: uv run pytest -q
+      - run: uv run python -m scripts.export_contracts --check
+      - run: uv run ruff check services scripts tests
+      - run: uv run mypy
+
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          tags: sponge:ci

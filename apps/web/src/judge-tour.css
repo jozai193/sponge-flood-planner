@@ -1,0 +1,16 @@
+header .quiet{margin-left:0}.tour-button{margin-left:auto}
+.judge-tour{position:fixed;inset:92px auto auto 50%;transform:translateX(-50%);width:min(760px,calc(100vw - 32px));max-height:calc(100vh - 112px);overflow:auto;background:#f7faf5;color:#183c40;padding:32px;border-radius:12px;box-shadow:0 24px 100px #00191dcc;z-index:30;border:1px solid #b9cfbf}
+.judge-tour h2{font-size:30px;line-height:1.15;margin:10px 0}
+.judge-tour h3{margin:0 0 8px}
+.judge-tour p{line-height:1.5}
+.tour-close{float:right;background:none;border:0;color:#315655;text-decoration:underline}
+.tour-lead{font-size:17px;max-width:650px}
+.tour-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}
+.tour-steps article{background:#e6efe6;border-radius:8px;padding:15px;display:flex;gap:10px}
+.tour-steps article>span{display:grid;place-items:center;background:#235c56;color:white;border-radius:50%;width:27px;height:27px;min-width:27px;font-weight:700}
+.tour-steps p{font-size:13px;margin:7px 0 0}
+.tour-proof{border-left:4px solid #83b95f;padding:14px 18px;background:#edf4e9}
+.tour-actions{display:flex;gap:12px;margin:20px 0 12px}
+.tour-actions .primary{width:auto}
+.tour-actions>button:not(.primary){border:1px solid #739088;background:white;color:#214d43;border-radius:6px;padding:12px 16px}
+@media(max-width:760px){.judge-tour{inset:78px auto auto 50%;padding:22px;max-height:calc(100vh - 90px)}.judge-tour h2{font-size:24px}.tour-steps{grid-template-columns:1fr}.tour-actions{flex-direction:column}.tour-actions .primary{width:100%}.tour-button{margin-left:auto}.subtitle{display:none}}

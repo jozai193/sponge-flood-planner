@@ -1,0 +1,52 @@
+{
+  "name": "sponge",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --config apps/web/vite.config.ts --host 127.0.0.1",
+    "build": "node scripts/generate-scenario-validator.mjs --check && tsc --noEmit && vite build --config apps/web/vite.config.ts",
+    "generate:validators": "node scripts/generate-scenario-validator.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:contracts": "vitest run tests/contracts",
+    "test:optimizer": "vitest run tests/optimizer",
+    "test:gpu": "playwright test tests/browser/gpu.spec.ts",
+    "test:e2e": "playwright test tests/browser/app.spec.ts",
+    "test:browser": "playwright test",
+    "smoke:production": "node scripts/smoke-production.mjs",
+    "verify:release": "node scripts/verify-release.mjs",
+    "export:pdf": "node scripts/export-pdf.mjs"
+  },
+  "packageManager": "pnpm@11.19.0",
+  "dependencies": {
+    "@deck.gl/core": "^9.4.0",
+    "@deck.gl/layers": "^9.4.0",
+    "@deck.gl/mesh-layers": "^9.4.0",
+    "@deck.gl/react": "^9.4.0",
+    "@luma.gl/engine": "^9.4.1",
+    "@luma.gl/webgl": "^9.4.1",
+    "@tanstack/react-query": "^5.103.1",
+    "earcut": "3.2.3",
+    "idb": "^8.0.3",
+    "lucide-react": "^1.47.0",
+    "maplibre-gl": "^6.10.0",
+    "proj4": "^2.22.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "zod": "^4.6.5",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^24.13.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "ajv": "^8.20.0",
+    "json-schema-to-typescript": "^16.0.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.1"
+  }
+}

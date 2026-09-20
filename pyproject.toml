@@ -1,0 +1,65 @@
+[project]
+name = "sponge"
+version = "0.1.0"
+description = "Reproducible neighbourhood stormwater planning"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn>=0.34,<1",
+  "pydantic>=2.10,<3",
+  "pydantic-settings>=2.7,<3",
+  "httpx>=0.28,<1",
+  "numpy>=2.2,<3",
+  "rasterio>=1.4,<2",
+  "pyproj>=3.7,<4",
+  "shapely>=2.0,<3",
+  "pillow>=11,<13",
+  "scipy>=1.15,<2",
+  "sqlalchemy>=2.0,<3",
+  "psycopg[binary]>=3.2,<4",
+  "alembic>=1.14,<2",
+  "redis>=8,<9",
+  "rq>=2,<3",
+  "jinja2>=3.1,<4",
+  "python-multipart>=0.0.20,<1",
+  "jsonschema>=4.23,<5",
+  "overturemaps>=1,<2",
+  "pyogrio>=0.12,<1",
+  "earthengine-api>=1,<2",
+  "h5py>=3.12,<4",
+  "swmm-toolkit>=0.16,<1",
+]
+[dependency-groups]
+dev = ["httpx2>=2,<3", "mypy>=2,<3", "pytest>=8,<10", "pytest-asyncio>=0.25,<2", "ruff>=0.9,<1"]
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+filterwarnings = [
+  "ignore:The anyio\\.abc\\.BlockingPortal alias is deprecated.*:DeprecationWarning:starlette\\.testclient",
+  "ignore:Use `@` matmul instead of `\\*` mul operator.*:PendingDeprecationWarning:rasterio\\.transform",
+]
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+[tool.ruff.lint.per-file-ignores]
+"services/api/main.py" = ["B008"] # FastAPI dependency markers are intentionally evaluated at definition time.
+
+[tool.mypy]
+python_version = "3.12"
+files = [
+  "services/api/body_limit.py",
+  "services/api/client_identity.py",
+  "services/api/database.py",
+  "services/api/jobs.py",
+  "services/api/main.py",
+  "services/api/queueing.py",
+  "services/api/retention.py",
+  "services/api/settings.py",
+  "services/reference/process_runner.py",
+]
+follow_imports = "skip"
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+ignore_missing_imports = true

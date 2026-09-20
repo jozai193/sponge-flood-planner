@@ -1,0 +1,1778 @@
+[
+  {
+    "name": "metadata never proves accuracy",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": false,
+    "expected_check": [
+      "terrain_epoch",
+      "needs_data"
+    ]
+  },
+  {
+    "name": "missing survey date despite recent download",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": false,
+    "expected_check": [
+      "terrain_epoch",
+      "needs_data"
+    ]
+  },
+  {
+    "name": "matching datum labels still need transformation evidence",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": false,
+    "expected_check": [
+      "coastal_datum",
+      "needs_data"
+    ]
+  },
+  {
+    "name": "unknown native resolution",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m"
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": false,
+    "expected_check": [
+      "terrain_resolution",
+      "needs_data"
+    ]
+  },
+  {
+    "name": "invalid native resolution",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": -1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": false,
+    "expected_check": [
+      "terrain_resolution",
+      "needs_data"
+    ]
+  },
+  {
+    "name": "no source records",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": []
+    },
+    "unsupported": false,
+    "expected_check": [
+      "terrain_source",
+      "needs_data"
+    ]
+  },
+  {
+    "name": "no provider",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": false,
+    "expected_check": [
+      "terrain_source",
+      "needs_data"
+    ]
+  },
+  {
+    "name": "different bundle",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": true,
+    "expected_check": null
+  },
+  {
+    "name": "different grid spacing",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 4,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": true,
+    "expected_check": null
+  },
+  {
+    "name": "different grid dimensions",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 8,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": true,
+    "expected_check": null
+  },
+  {
+    "name": "different crs",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32644",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": true,
+    "expected_check": null
+  },
+  {
+    "name": "different terrain origin",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 0
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": true,
+    "expected_check": null
+  },
+  {
+    "name": "different terrain datum",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "MSL",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": true,
+    "expected_check": null
+  },
+  {
+    "name": "malformed grid",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": [],
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": true,
+    "expected_check": null
+  },
+  {
+    "name": "held coastal tail",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": false,
+    "expected_check": [
+      "coastal_tail",
+      "exploratory"
+    ]
+  },
+  {
+    "name": "self reported validated flags do not confer readiness",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1,
+        "observation_validation": "validated",
+        "bathymetry": "verified",
+        "datum_alignment": "verified"
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": false,
+    "expected_check": [
+      "bathymetry",
+      "needs_data"
+    ]
+  },
+  {
+    "name": "rainfall does not require bathymetry",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "coastal": false,
+          "external": false
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": null,
+        "inflows": [],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": false,
+    "expected_check": [
+      "rainfall",
+      "exploratory"
+    ]
+  },
+  {
+    "name": "coastal does not require rainfall",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": false,
+          "coastal": true,
+          "external": false
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0,
+          "intervals": null
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": false,
+    "expected_check": [
+      "bathymetry",
+      "needs_data"
+    ]
+  },
+  {
+    "name": "parameterised drainage",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2,
+        "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": [
+          {
+            "cell": 6,
+            "crestDepthM": 0,
+            "ratePerS": 0.01,
+            "maxFlowM3S": 1,
+            "source": "assumed outlet"
+          }
+        ]
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "manifest": {
+      "bundle_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "grid": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "crs": "EPSG:32618",
+        "vertical_datum": "NAVD88",
+        "elevation_origin_m": 2
+      },
+      "quality": {
+        "terrain_provider": "usgs_1m",
+        "native_resolution_m": 1
+      },
+      "sources": [
+        {
+          "provider": "USGS",
+          "retrieved_at": "2026-09-15"
+        }
+      ]
+    },
+    "unsupported": false,
+    "expected_check": [
+      "drainage",
+      "exploratory"
+    ]
+  }
+]

@@ -1,0 +1,264 @@
+{
+  "$defs": {
+    "DrainNode": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "x": {
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "title": "Y",
+          "type": "number"
+        },
+        "invert_m": {
+          "title": "Invert M",
+          "type": "number"
+        },
+        "ground_m": {
+          "title": "Ground M",
+          "type": "number"
+        },
+        "kind": {
+          "enum": [
+            "inlet",
+            "junction",
+            "outfall"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "inlet_capacity_m3_s": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Inlet Capacity M3 S"
+        },
+        "tailwater_m": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tailwater M"
+        },
+        "storage_area_m2": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 10000,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Storage Area M2"
+        },
+        "initial_depth_m": {
+          "default": 0,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Initial Depth M",
+          "type": "number"
+        },
+        "inlet_curve": {
+          "anyOf": [
+            {
+              "items": {
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array"
+              },
+              "maxItems": 100,
+              "minItems": 2,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Inlet Curve"
+        }
+      },
+      "required": [
+        "id",
+        "x",
+        "y",
+        "invert_m",
+        "ground_m",
+        "kind"
+      ],
+      "title": "DrainNode",
+      "type": "object"
+    },
+    "DrainPipe": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "from_node": {
+          "title": "From Node",
+          "type": "string"
+        },
+        "to_node": {
+          "title": "To Node",
+          "type": "string"
+        },
+        "diameter_m": {
+          "exclusiveMinimum": 0,
+          "maximum": 30,
+          "title": "Diameter M",
+          "type": "number"
+        },
+        "length_m": {
+          "exclusiveMinimum": 0,
+          "maximum": 100000,
+          "title": "Length M",
+          "type": "number"
+        },
+        "manning_n": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Manning N",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "from_node",
+        "to_node",
+        "diameter_m",
+        "length_m",
+        "manning_n"
+      ],
+      "title": "DrainPipe",
+      "type": "object"
+    },
+    "SurveySource": {
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "maxLength": 300,
+          "minLength": 3,
+          "title": "Title",
+          "type": "string"
+        },
+        "attribution": {
+          "maxLength": 500,
+          "minLength": 3,
+          "title": "Attribution",
+          "type": "string"
+        },
+        "observed_at": {
+          "format": "date-time",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "horizontal_crs": {
+          "title": "Horizontal Crs",
+          "type": "string"
+        },
+        "vertical_datum": {
+          "maxLength": 200,
+          "minLength": 2,
+          "title": "Vertical Datum",
+          "type": "string"
+        },
+        "license": {
+          "maxLength": 300,
+          "minLength": 2,
+          "title": "License",
+          "type": "string"
+        },
+        "provenance": {
+          "enum": [
+            "surveyed",
+            "provider_estimate",
+            "user_assumption"
+          ],
+          "title": "Provenance",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "attribution",
+        "observed_at",
+        "horizontal_crs",
+        "vertical_datum",
+        "license",
+        "provenance"
+      ],
+      "title": "SurveySource",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "const": "drainage",
+      "default": "drainage",
+      "title": "Kind",
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/SurveySource"
+    },
+    "nodes": {
+      "items": {
+        "$ref": "#/$defs/DrainNode"
+      },
+      "maxItems": 10000,
+      "minItems": 1,
+      "title": "Nodes",
+      "type": "array"
+    },
+    "pipes": {
+      "items": {
+        "$ref": "#/$defs/DrainPipe"
+      },
+      "maxItems": 20000,
+      "title": "Pipes",
+      "type": "array"
+    }
+  },
+  "required": [
+    "source",
+    "nodes",
+    "pipes"
+  ],
+  "title": "DrainageSurvey",
+  "type": "object"
+}

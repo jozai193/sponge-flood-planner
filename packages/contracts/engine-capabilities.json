@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "engines": {
+    "webgl2-hll": {
+      "capabilities": ["rainfall", "external_inflow", "prescribed_coastal_level", "parameterised_outlets", "combined_forcing"],
+      "design_capabilities": ["rain_garden", "bioswale", "permeable_pavement", "detention_basin"],
+      "execution": "browser",
+      "limitation": "Prescribed surface forcing only; no validated surge generation, waves or coupled sewer network."
+    }
+  },
+  "unavailable": {
+    "cpu-hll": "Reference solver exists; cross-engine scenario execution adapter is not connected.",
+    "sfincs": "Specialist adapter has not been integrated or verified.",
+    "swmm": "Experimental coupling fails whole-network continuity and is not enabled."
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "capabilities": {
+      "items": {
+        "enum": [
+          "buildings",
+          "terrain",
+          "landcover",
+          "soils",
+          "waterways",
+          "rainfall",
+          "hydrorivers",
+          "catchments",
+          "dynamic_world"
+        ],
+        "type": "string"
+      },
+      "maxItems": 9,
+      "minItems": 1,
+      "title": "Capabilities",
+      "type": "array"
+    },
+    "start_date": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Start Date"
+    },
+    "end_date": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "End Date"
+    }
+  },
+  "title": "EnrichmentRequest",
+  "type": "object"
+}

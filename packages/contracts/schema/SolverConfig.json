@@ -1,0 +1,68 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "engine": {
+      "default": "cpu-hll",
+      "enum": [
+        "cpu-hll",
+        "webgl2-hll"
+      ],
+      "title": "Engine",
+      "type": "string"
+    },
+    "version": {
+      "const": "0.1.0",
+      "default": "0.1.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "cfl": {
+      "default": 0.4,
+      "exclusiveMinimum": 0,
+      "maximum": 0.45,
+      "title": "Cfl",
+      "type": "number"
+    },
+    "dt_max_s": {
+      "default": 1.0,
+      "exclusiveMinimum": 0,
+      "maximum": 10,
+      "title": "Dt Max S",
+      "type": "number"
+    },
+    "dry_depth_m": {
+      "default": 1e-05,
+      "exclusiveMinimum": 0,
+      "maximum": 0.001,
+      "title": "Dry Depth M",
+      "type": "number"
+    },
+    "spatial_order": {
+      "default": 1,
+      "enum": [
+        1,
+        2
+      ],
+      "title": "Spatial Order",
+      "type": "integer"
+    },
+    "boundary": {
+      "default": "closed",
+      "enum": [
+        "closed",
+        "open"
+      ],
+      "title": "Boundary",
+      "type": "string"
+    },
+    "output_interval_s": {
+      "default": 60,
+      "exclusiveMinimum": 0,
+      "maximum": 3600,
+      "title": "Output Interval S",
+      "type": "number"
+    }
+  },
+  "title": "SolverConfig",
+  "type": "object"
+}

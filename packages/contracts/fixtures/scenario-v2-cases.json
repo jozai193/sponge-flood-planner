@@ -1,0 +1,2656 @@
+[
+  {
+    "name": "all three sources",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": true,
+    "compatible": true
+  },
+  {
+    "name": "uniform rain",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": null
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": true,
+    "compatible": true
+  },
+  {
+    "name": "rain only",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": false,
+          "coastal": false
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": null,
+        "inflows": [],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": true,
+    "compatible": true
+  },
+  {
+    "name": "coast only",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": false,
+          "external": false,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0,
+          "intervals": null
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": true,
+    "compatible": true
+  },
+  {
+    "name": "cpu-hll",
+    "scenario": {
+      "version": 2,
+      "engine": "cpu-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": true,
+    "compatible": false
+  },
+  {
+    "name": "sfincs",
+    "scenario": {
+      "version": 2,
+      "engine": "sfincs",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": true,
+    "compatible": false
+  },
+  {
+    "name": "swmm",
+    "scenario": {
+      "version": 2,
+      "engine": "swmm",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": true,
+    "compatible": false
+  },
+  {
+    "name": "unknown-engine",
+    "scenario": {
+      "version": 2,
+      "engine": "unknown-engine",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": true,
+    "compatible": false
+  },
+  {
+    "name": "toString",
+    "scenario": {
+      "version": 2,
+      "engine": "toString",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": true,
+    "compatible": false
+  },
+  {
+    "name": "unsupported waves",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [
+        "wave_generation"
+      ],
+      "execution_input_hash": null
+    },
+    "valid": true,
+    "compatible": false
+  },
+  {
+    "name": "supplied capability cannot hide sources",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": true,
+    "compatible": true
+  },
+  {
+    "name": "version",
+    "scenario": {
+      "version": 3,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "numeric flag",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": 1,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "string dimension",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": "4",
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "invalid dx",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 0,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "extra source",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": [],
+        "unknown": 1
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "disabled rain depth",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": false,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "disabled coast with data",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": false
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "missing inflow",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "missing coast",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": null,
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "rain integral",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.01,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "interval overlap",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 4,
+              "rate_m_s": 0.0005
+            },
+            {
+              "start_s": 3,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "interval reversed",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 5,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "empty intervals",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": []
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "rain beyond clock",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 6,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "coast beyond clock",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 621,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "coast nonzero start",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 1,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "coast duplicate time",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 0,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "coast wrong edge",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            1
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "coast repeated cells",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            0
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "coast negative cell",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            -4
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "inflow reversed",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 11,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "inflow outside grid",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 16,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "inflow outside clock",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 621,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "overlapping boundaries",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 0,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "blank source",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": " "
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "invalid hash",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": null
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": "abc"
+    },
+    "valid": false,
+    "compatible": null
+  },
+  {
+    "name": "legacy opaque bundle identifier",
+    "scenario": {
+      "version": 2,
+      "engine": "webgl2-hll",
+      "domain": {
+        "nx": 4,
+        "ny": 4,
+        "dx_m": 2,
+        "dy_m": 3,
+        "horizontal_crs": "LOCAL_METRES",
+        "vertical_datum": "unspecified",
+        "elevation_origin_m": null,
+        "bundle_id": "controlled-saved-comparison"
+      },
+      "forcing": {
+        "version": 2,
+        "components": {
+          "rainfall": true,
+          "external": true,
+          "coastal": true
+        },
+        "storm": {
+          "duration": 5,
+          "recession": 615,
+          "depth": 0.0025,
+          "intervals": [
+            {
+              "start_s": 0,
+              "end_s": 5,
+              "rate_m_s": 0.0005
+            }
+          ]
+        },
+        "coastal": {
+          "edge": "west",
+          "cells": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "levels": [
+            {
+              "timeS": 0,
+              "elevationM": 0.2
+            },
+            {
+              "timeS": 10,
+              "elevationM": 0.4
+            }
+          ],
+          "source": "controlled fixture",
+          "datum": "local metres"
+        },
+        "inflows": [
+          {
+            "cell": 15,
+            "flowM3S": 0.01,
+            "startS": 0,
+            "endS": 10,
+            "source": "controlled fixture"
+          }
+        ],
+        "outlets": []
+      },
+      "required_capabilities": [],
+      "execution_input_hash": null
+    },
+    "valid": true,
+    "compatible": true
+  }
+]
