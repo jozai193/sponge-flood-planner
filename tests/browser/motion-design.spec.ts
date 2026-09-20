@@ -20,9 +20,6 @@ test('storm arrival and intervention placement use purposeful motion',async({pag
  await expect(divider).toHaveAttribute('aria-valuenow','52');
  await divider.press('ArrowRight');
  await expect(divider).toHaveAttribute('aria-valuenow','54');
- await page.getByRole('button',{name:'downpour'}).click();
- await expect(opening).toHaveAttribute('data-rain','downpour');
- await expect(page.getByRole('button',{name:'downpour'})).toHaveAttribute('aria-pressed','true');
  await expect(page.getByRole('button',{name:'Take the guided tour'})).toBeVisible();
  await page.waitForTimeout(7200);
  await expect(opening).toBeVisible();

@@ -14,11 +14,7 @@ const skyline=[
   [1277,122,94,240],[1380,186,70,176],
 ] as const;
 
-type RainIntensity='drizzle'|'rain'|'downpour';
-
-const rainDensity:Record<RainIntensity,number>={drizzle:58,rain:118,downpour:190};
-
-function RainCanvas({intensity}:{intensity:RainIntensity}){
+function RainCanvas(){
   const canvasRef=useRef<HTMLCanvasElement>(null);
 
   useEffect(()=>{
@@ -51,7 +47,7 @@ function RainCanvas({intensity}:{intensity:RainIntensity}){
       canvas.height=Math.max(1,Math.round(height*pixelRatio));
       context.setTransform(pixelRatio,0,0,pixelRatio,0,0);
       const scale=Math.min(1,Math.max(.42,(width*height)/1_050_000));
-      const count=Math.min(220,Math.round(rainDensity[intensity]*scale));
+      const count=Math.min(220,Math.round(118*scale));
       drops=Array.from({length:reduced?Math.min(18,count):count},()=>createDrop(true));
     };
     const draw=(animate:boolean)=>{
@@ -102,7 +98,7 @@ function RainCanvas({intensity}:{intensity:RainIntensity}){
       window.removeEventListener('resize',resize);
       document.removeEventListener('visibilitychange',setVisibility);
     };
-  },[intensity]);
+  },[]);
 
   return <canvas ref={canvasRef} className="launch-rain-canvas" aria-hidden="true"/>;
 }
@@ -110,9 +106,8 @@ function RainCanvas({intensity}:{intensity:RainIntensity}){
 export default function LaunchExperience({exiting,onEnter,onTour}:Props){
   const sectionRef=useRef<HTMLElement>(null);
   const [divider,setDivider]=useState(52);
-  const [intensity,setIntensity]=useState<RainIntensity>('rain');
   const sceneDivider=divider*14.4;
-  const floodTop={drizzle:425,rain:390,downpour:354}[intensity];
+  const floodTop=390;
 
   function move(event:PointerEvent<HTMLElement>){
     const box=event.currentTarget.getBoundingClientRect();
@@ -137,7 +132,6 @@ export default function LaunchExperience({exiting,onEnter,onTour}:Props){
   return <section
     ref={sectionRef}
     className={`launch-experience ${exiting?'is-exiting':''}`}
-    data-rain={intensity}
     style={{'--launch-divider':`${divider}%`} as CSSProperties}
     aria-label="SPONGE stormwater model introduction"
     role="dialog"
@@ -149,7 +143,7 @@ export default function LaunchExperience({exiting,onEnter,onTour}:Props){
     <div className="launch-aurora launch-aurora-one" aria-hidden="true"/>
     <div className="launch-aurora launch-aurora-two" aria-hidden="true"/>
     <div className="launch-lightning" aria-hidden="true"/>
-    <RainCanvas intensity={intensity}/>
+    <RainCanvas/>
 
     <div className="launch-photo-world" role="group" aria-label="Two-image rainy street comparison">
       <figure className="launch-photo-panel launch-photo-conventional">
@@ -169,16 +163,6 @@ export default function LaunchExperience({exiting,onEnter,onTour}:Props){
     <div className="launch-topbar">
       <div className="launch-brand"><Droplets size={27}/><span>SPONGE</span><small>NEIGHBOURHOOD STORMWATER LAB</small></div>
       <div className="launch-runtime"><i/><span>Browser physics</span><b>No runtime AI</b></div>
-    </div>
-
-    <div className="launch-weather-controls" role="group" aria-label="Rain intensity">
-      <span>Rain intensity</span>
-      {(['drizzle','rain','downpour'] as const).map(value=><button
-        key={value}
-        type="button"
-        aria-pressed={intensity===value}
-        onClick={()=>setIntensity(value)}
-      >{value}</button>)}
     </div>
 
     <svg className="launch-world" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
