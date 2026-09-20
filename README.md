@@ -18,6 +18,9 @@ Prerequisites: Node.js, pnpm, Python 3.11 for the bootstrap, and Docker Desktop 
 
 Open http://127.0.0.1:5173. On a fresh workspace, prepare a public sample:
 
+The root URL opens the cinematic project landing page. Direct bundle links open
+the simulator; append `?intro=1` to replay the landing or `?intro=0` to skip it.
+
 ```powershell
 
 .venv/Scripts/python.exe -m scripts.prepare_neighbourhood --public-sample
@@ -48,7 +51,7 @@ The default published port is restricted to `127.0.0.1:8080`; put an HTTPS rever
 
 - Browser WebGL2 first-/second-order HLL engine and worker; CPU parity, closed-wall conservation, nonlinear control convergence, coastal refinement and restart checks.
 
-- General address search and queued preparation, real terrain/building ingestion, versioned bundles, validated GeoTIFF/GeoJSON/rainfall imports, and an immutable offline demo bundle.
+- General address search and queued preparation, country-derived ISO planning currency, real terrain/building ingestion, versioned bundles, validated GeoTIFF/GeoJSON/rainfall imports, and an immutable offline demo bundle.
 
 - Interactive 3D terrain/buildings, rainfall/external/coastal/combined scenarios, physical-time progress, recovery checkpoints and exposure metrics.
 
@@ -101,6 +104,11 @@ The objective is the worst value across the disclosed 80/100/120% rainfall-depth
 Use **Data & assumptions → Broaden neighbourhood data** to acquire global evidence, create enriched simulation revisions, or import surveys and terrain. See [data expansion](docs/hackathon-build/data-expansion.md) for source coverage, optional access configuration, server caches, import formats and explicit scientific limits.
 
 For missing addresses, add a city/region or paste latitude, longitude. See [location search](docs/hackathon-build/location-search.md) for the free search providers, coordinate fallback and coverage limits.
+
+Named search results carry their country currency into the prepared bundle,
+budget, intervention costs, replay and evidence exports. Amounts are interpreted
+as user-entered local values and are never silently exchange-rate converted.
+Raw coordinates without country metadata use a clearly labelled USD fallback.
 
 ## Facility releases and returns
 

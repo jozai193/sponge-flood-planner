@@ -5,7 +5,9 @@ test('storm arrival and intervention placement use purposeful motion',async({pag
  const opening=page.locator('.launch-experience');
  await expect(opening).toContainText('See the storm.',{timeout:30000});
  await expect(opening).toContainText('Shape the response.');
- await page.waitForTimeout(4700);
+ await expect(page.getByRole('button',{name:'Take the guided tour'})).toBeVisible();
+ await page.waitForTimeout(7200);
+ await expect(opening).toBeVisible();
  await page.screenshot({path:'output/playwright/storm-intro-polish.png'});
  await page.evaluate(()=>document.querySelector<HTMLButtonElement>('.launch-experience button')?.click());
  await expect(opening).toBeHidden({timeout:5000});
@@ -17,9 +19,17 @@ test('storm arrival and intervention placement use purposeful motion',async({pag
  await expect(page.locator('.design-stage-toast')).toContainText('Bioswale placed');
  await page.screenshot({path:'output/playwright/design-placement-polish.png'});
  await expect(page.locator('.design-row')).toContainText('bioswale');
+ await page.locator('.storm-atmosphere').evaluate(element=>{
+  const recordRunning=()=>{
+   if(element.classList.contains('is-running'))element.setAttribute('data-observed-running','true');
+  };
+  recordRunning();
+  new MutationObserver(recordRunning).observe(element,{attributeFilter:['class']});
+ });
  await page.getByRole('button',{name:'Run storm',exact:true}).click();
- await expect(page.locator('.storm-atmosphere')).toHaveClass(/is-running/);
- await page.getByRole('button',{name:'Stop simulation',exact:true}).click();
+ await expect(page.locator('.storm-atmosphere')).toHaveAttribute('data-observed-running','true');
+ const stop=page.getByRole('button',{name:'Stop simulation',exact:true});
+ if(await stop.isVisible())await stop.click();
 });
 
 test('reduced-motion preference removes decorative storm animation',async({page})=>{

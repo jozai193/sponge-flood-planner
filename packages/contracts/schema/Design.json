@@ -119,8 +119,8 @@
       "type": "integer"
     },
     "currency": {
-      "const": "USD",
       "default": "USD",
+      "pattern": "^[A-Z]{3}$",
       "title": "Currency",
       "type": "string"
     },

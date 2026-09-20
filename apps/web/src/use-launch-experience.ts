@@ -1,15 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { readSessionValue, writeSessionValue } from "./api-client";
-
 export function useLaunchExperience() {
   const [launch, setLaunch] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     const forced = params.get("intro") === "1";
-    const disabled = params.get("intro") === "0" || params.get("tour") === "1";
-    const seen = readSessionValue("sponge-launch-seen") === "1";
-    const visible = !disabled && (forced || !seen);
-    if (visible) writeSessionValue("sponge-launch-seen", "1");
+    const directApp = params.has("bundle") || params.get("tour") === "1";
+    const disabled = params.get("intro") === "0";
+    const visible = !disabled && (forced || !directApp);
     return { visible, exiting: false, run: 0 };
   });
   const closeTimer = useRef<number | null>(null);
@@ -30,10 +27,12 @@ export function useLaunchExperience() {
 
   useEffect(() => {
     if (!launch.visible) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const timer = window.setTimeout(closeLaunch, reduced ? 1800 : 6800);
-    return () => window.clearTimeout(timer);
-  }, [closeLaunch, launch.run, launch.visible]);
+    const keydown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeLaunch();
+    };
+    window.addEventListener("keydown", keydown);
+    return () => window.removeEventListener("keydown", keydown);
+  }, [closeLaunch, launch.visible]);
 
   useEffect(
     () => () => {

@@ -7,7 +7,7 @@ test('prepared demo recovers from one transient startup connection failure',asyn
   if(attempts===1)return route.abort('connectionreset');
   return route.continue();
  });
- await page.goto('/');
+ await page.goto('/?intro=0');
  await expect(page.getByRole('heading',{name:'Spring Garden, Philadelphia'})).toBeVisible({timeout:30000});
  expect(attempts).toBe(2);
  await expect(page.getByRole('button',{name:'Run storm',exact:true})).toBeEnabled({timeout:30000});

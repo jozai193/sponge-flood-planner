@@ -16,6 +16,7 @@ from shapely.ops import transform
 from services.api.contracts import PrepareRequest, content_hash
 from services.api.settings import settings
 from services.geodata.building_height import building_height
+from services.geodata.currency import currency_for_country
 from services.geodata.providers import buildings, terrarium, usgs_products
 
 ROOT=settings.storage_root/"bundles"
@@ -45,6 +46,7 @@ def binary_dilation(mask):
 
 def prepare(request: dict, progress=lambda stage: None, supplements: dict | None = None) -> dict:
     req=PrepareRequest.model_validate(request)
+    currency=currency_for_country(req.country_code) or req.currency
     progress("projecting")
     zone=int((req.longitude+180)//6)+1
     crs=CRS.from_epsg((32600 if req.latitude>=0 else 32700)+min(zone,60))
@@ -111,7 +113,8 @@ def prepare(request: dict, progress=lambda stage: None, supplements: dict | None
         output_buildings.append({"id":str(feature.get("id",props.get("OBJECTID",i))),
             "geometry":mapping(local),"area_m2":geom.area,"height_m":height,
             "height_source":height_source,
-            "replacement_value_usd":None,"first_floor_elevation_m":None,"damage_curve_id":None})
+            "structure_value_minor":None,"valuation_currency":currency,
+            "first_floor_elevation_m":None,"damage_curve_id":None})
     progress("rasterising")
     affine=Affine(dx,0,xmin,0,dx,ymin)
     labels=rasterize(polygons,out_shape=(n,n),transform=affine,fill=0,dtype="int32") if polygons else np.zeros((n,n),dtype=np.int32)
@@ -180,6 +183,8 @@ def prepare(request: dict, progress=lambda stage: None, supplements: dict | None
         artifacts.append({"name":name,"dtype":str(array.dtype),"shape":[n,n],"bytes":len(raw),
                           "sha256":hashlib.sha256(raw).hexdigest()})
     manifest={"schema_version":"sponge.v1","label":req.label,
+        "country_code":req.country_code,"currency":currency,
+        "currency_source":"geocoded_country" if currency_for_country(req.country_code) else "fallback",
         "location":[req.longitude,req.latitude],"extent_m":req.extent_m,
         "grid":{"nx":n,"ny":n,"dx_m":dx,"dy_m":dx,"crs":crs.to_string(),
                 "origin_x_m":xmin,"origin_y_m":ymin,"elevation_origin_m":elevation_origin,

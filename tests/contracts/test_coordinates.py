@@ -8,6 +8,8 @@ def test_coordinates_work_without_geocoder():
     result=geocode({'query':'1.29, 103.85'},session_id='test')
     assert result['locations'][0]['latitude']==1.29
     assert result['locations'][0]['longitude']==103.85
+    assert result['locations'][0]['currency']=='USD'
+    assert result['locations'][0]['currency_source']=='fallback'
 
 def test_polar_coordinate_limit_is_explicit():
     result=geocode({'query':'89, 0'},session_id='test')

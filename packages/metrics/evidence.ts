@@ -4,7 +4,7 @@ import {unpackInput} from './report';
 import {modelSourceSha256} from './build-info';
 export async function evidenceFiles(report:Awaited<ReturnType<typeof buildReport>>){
  const scenario=report.scenario;
- const spatial=selectedGeoJSON(unpackInput(scenario.baselineInput),scenario.selectedDesigns,scenario.provenance.grid,scenario.evidence.budgetMinor);
+ const spatial=selectedGeoJSON(unpackInput(scenario.baselineInput),scenario.selectedDesigns,scenario.provenance.grid,scenario.evidence.budgetMinor,scenario.evidence.currency);
  const files:Record<string,string>={
   'sponge-planning-report.html':report.html,
   'sponge-assumed-costs.csv':report.csv,

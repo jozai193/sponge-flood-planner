@@ -21,7 +21,7 @@ export type SourceIds = string[];
  */
 export type Interventions = Intervention[];
 export type BudgetMinor = number;
-export type Currency = "USD";
+export type Currency = string;
 export type PriceYear = number;
 export type LockedIds = string[];
 export type ExcludedIds = string[];

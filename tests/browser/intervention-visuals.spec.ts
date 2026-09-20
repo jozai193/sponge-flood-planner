@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 
 test('all four interventions make modelled flood-reduction mechanisms visible',async({page})=>{
- await page.goto('/');
+ await page.goto('/?intro=0');
  await page.evaluate(async()=>{
   const harnessPath='/src/testing/gpu-harness.ts',storagePath='/src/completed-comparison.ts';
   const harness=await import(harnessPath),storage=await import(storagePath);

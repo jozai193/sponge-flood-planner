@@ -15,8 +15,10 @@ test('unsafe or infeasible designs cannot reach solver',()=>{
  const input=base();input.solid[5]=1;input.rainWeights[5]=0;expect(()=>compileDesign(input,[garden],5000)).toThrow('building');
 });
 test('itemised costs reconcile and protected candidate evidence blocks execution',()=>{
- const costBreakdown={sitePreparationMinor:100,materialsMinor:200,installationMinor:300,contingencyMinor:400,annualMaintenanceMinor:50,currency:'USD' as const,priceYear:2026,basis:'Controlled dated estimate'};
+const costBreakdown={sitePreparationMinor:100,materialsMinor:200,installationMinor:300,contingencyMinor:400,annualMaintenanceMinor:50,currency:'USD' as const,priceYear:2026,basis:'Controlled dated estimate'};
  expect(()=>compileDesign(base(),[{...garden,costMinor:1000,costBreakdown}],1000)).not.toThrow();
  expect(()=>compileDesign(base(),[{...garden,costMinor:999,costBreakdown}],1000)).toThrow('do not equal');
+ expect(()=>compileDesign(base(),[{...garden,costMinor:1000,costBreakdown:{...costBreakdown,currency:'INR'}}],1000)).not.toThrow();
+ expect(()=>compileDesign(base(),[{...garden,costMinor:1000,costBreakdown:{...costBreakdown,currency:'rupees'}}],1000)).toThrow('currency');
  expect(()=>compileDesign(base(),[{...garden,candidateEvidence:{parcelIds:[],sourceNote:'fixture',geometryId:'garden',protectedReasons:['wetland']}}],1000)).toThrow('protected');
 });

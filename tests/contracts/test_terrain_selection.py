@@ -15,10 +15,12 @@ def test_auto_terrain_uses_full_coverage_or_records_fallback(tmp_path,monkeypatc
         return np.ones((32,32))*40,[],'fixture datum'
     monkeypatch.setattr(usgs,'sample_products',sample)
     monkeypatch.setattr(preparation,'terrarium',lambda lon,lat:(np.ones(lon.shape)*20,[]))
-    m=preparation.prepare({'longitude': 77,'latitude': 13,'extent_m': 100,'grid_cells': 32,'source': 'auto','label': 'Test area'})
+    m=preparation.prepare({'longitude': 77,'latitude': 13,'extent_m': 100,'grid_cells': 32,'source': 'auto','label': 'Test area','country_code': 'IN','currency': 'USD'})
     assert m['quality']['terrain_provider']==('usgs_1m' if covered else 'terrarium')
     assert bool(m['quality']['terrain_selection_note']) is (not covered)
     assert m['grid']['elevation_origin_m']==(40 if covered else 20)
+    assert m['currency']=='INR'
+    assert m['currency_source']=='geocoded_country'
 
 
 def test_bundle_publication_is_content_addressed_and_detects_corruption(tmp_path,monkeypatch):

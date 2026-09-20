@@ -3,7 +3,7 @@ import {validateGPUInput,type GPUInput} from '../simulation/src/gpu';
 import {INTERVENTION_CATALOG} from './intervention-catalog';
 export type GIKind='rain_garden'|'bioswale'|'permeable_pavement'|'detention_basin';
 export interface DesignControl {rating?:ControlRating;targetCell:number|null;crestDepthM:number;ratePerS:number;maxFlowM3S:number}
-export interface CostBreakdown {sitePreparationMinor:number;materialsMinor:number;installationMinor:number;contingencyMinor:number;annualMaintenanceMinor:number;currency:'USD';priceYear:number;basis:string}
+export interface CostBreakdown {sitePreparationMinor:number;materialsMinor:number;installationMinor:number;contingencyMinor:number;annualMaintenanceMinor:number;currency:string;priceYear:number;basis:string}
 export interface CandidateEvidence {parcelIds:string[];sourceNote:string;geometryId:string;protectedReasons?:string[]}
 export interface PhysicalDesign {id:string;kind:GIKind;planningConstraint?:'optional'|'locked'|'excluded';surfaceControl?:DesignControl;underdrain?:DesignControl;cloggingFraction?:number;swaleSlope?:number;swaleAxis?:'x'|'y';cells:number[];eligibility:'confirmed'|'user_assumed'|'unverified';excavationM:number;storageDepthM:number;conductivityMS:number;percolationMS:number;roughness:number;costMinor:number;costBreakdown?:CostBreakdown;candidateEvidence?:CandidateEvidence;parameterSource:string}
 /** Compile immutable physical edits. Surface excavation is not subsurface capacity. */
@@ -19,7 +19,7 @@ export function compileDesign(base:GPUInput,designs:PhysicalDesign[],budgetMinor
     if(!design.parameterSource.trim())throw new Error('Parameter source or assumption required');
     if(!Number.isSafeInteger(design.costMinor)||design.costMinor<0)throw new Error('Invalid installation cost');
     if(design.candidateEvidence?.protectedReasons?.length)throw new Error('Candidate is protected: '+design.candidateEvidence.protectedReasons.join(', '));
-    if(design.costBreakdown){const c=design.costBreakdown,values=[c.sitePreparationMinor,c.materialsMinor,c.installationMinor,c.contingencyMinor,c.annualMaintenanceMinor];if(values.some(v=>!Number.isSafeInteger(v)||v<0))throw new Error('Invalid cost line item');if(c.currency!=='USD'||!Number.isInteger(c.priceYear)||c.priceYear<2000||c.priceYear>2100||!c.basis.trim())throw new Error('Cost currency, price year and basis are required');if(c.sitePreparationMinor+c.materialsMinor+c.installationMinor+c.contingencyMinor!==design.costMinor)throw new Error('Capital cost line items do not equal design cost');}
+    if(design.costBreakdown){const c=design.costBreakdown,values=[c.sitePreparationMinor,c.materialsMinor,c.installationMinor,c.contingencyMinor,c.annualMaintenanceMinor];if(values.some(v=>!Number.isSafeInteger(v)||v<0))throw new Error('Invalid cost line item');if(!/^[A-Z]{3}$/.test(c.currency)||!Number.isInteger(c.priceYear)||c.priceYear<2000||c.priceYear>2100||!c.basis.trim())throw new Error('Cost currency, price year and basis are required');if(c.sitePreparationMinor+c.materialsMinor+c.installationMinor+c.contingencyMinor!==design.costMinor)throw new Error('Capital cost line items do not equal design cost');}
     cost+=design.costMinor;
     if(cost>budgetMinor)throw new Error('Design exceeds budget');
     for(const [value,max] of [[design.excavationM,3],[design.storageDepthM,2],[design.conductivityMS,.001],[design.percolationMS,.001],[design.roughness,.5]])if(!Number.isFinite(value)||value<0||value>max)throw new Error('Invalid physical parameter');

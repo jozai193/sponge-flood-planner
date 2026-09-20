@@ -14,18 +14,24 @@ from concurrent.futures import ThreadPoolExecutor
 
 import httpx
 
+from services.geodata.currency import currency_for_country
 from services.geodata.providers import fetch
 
 PAIR = re.compile(r"\s*([+-]?(?:\d+(?:\.\d*)?|\.\d+))\s*,\s*([+-]?(?:\d+(?:\.\d*)?|\.\d+))\s*")
 ATTRIBUTION = "© OpenStreetMap contributors"
 
 
-def location(label, latitude, longitude, provider):
+def location(label, latitude, longitude, provider, country_code=None):
     lat, lon = float(latitude), float(longitude)
     if not (math.isfinite(lat) and math.isfinite(lon) and -90 <= lat <= 90 and -180 <= lon <= 180):
         raise ValueError("Use latitude between -90 and 90 and longitude between -180 and 180")
     supported = -80 <= lat <= 80
+    code = str(country_code).strip().upper() if country_code else None
+    currency = currency_for_country(code)
     return {"label": str(label), "latitude": lat, "longitude": lon, "provider": provider,
+            "country_code": code if code and len(code) == 2 else None,
+            "currency": currency or "USD",
+            "currency_source": "country" if currency else "fallback",
             "terrain_supported": supported,
             "coverage_note": "Terrain availability and quality are checked when loading." if supported else
                 "Location found, but terrain outside 80°S–80°N is not supported yet."}
@@ -56,6 +62,7 @@ def search_places(query, *, nominatim_url, photon_url, allow_request, fetcher=No
         params = {"q": query, "limit": 6}
         if provider == "Nominatim":
             params["format"] = "jsonv2"
+            params["addressdetails"] = 1
         try:
             raw, source = fetcher(url, params, max_bytes=1_000_000, timeout_s=10, max_age_s=86400)
             data = json.loads(raw)
@@ -66,7 +73,8 @@ def search_places(query, *, nominatim_url, photon_url, allow_request, fetcher=No
             for row in rows[:6]:
                 try:
                     if provider == "Nominatim":
-                        found.append(location(row["display_name"], row["lat"], row["lon"], provider))
+                        found.append(location(row["display_name"], row["lat"], row["lon"], provider,
+                                              (row.get("address") or {}).get("country_code")))
                     else:
                         p = row["properties"]
                         if not isinstance(p, dict):
@@ -76,7 +84,7 @@ def search_places(query, *, nominatim_url, photon_url, allow_request, fetcher=No
                         if not label or row["geometry"]["type"] != "Point":
                             continue
                         lon, lat = row["geometry"]["coordinates"][:2]
-                        found.append(location(label, lat, lon, provider))
+                        found.append(location(label, lat, lon, provider, p.get("countrycode")))
                 except (KeyError, TypeError, ValueError, IndexError):
                     continue
             return found, {**source, "provider": provider}, None

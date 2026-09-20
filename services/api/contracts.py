@@ -97,7 +97,7 @@ class Design(WireModel):
     schema_version: Literal["sponge.v1"] = "sponge.v1"
     interventions: list[Intervention] = Field(default_factory=list, max_length=100)
     budget_minor: int = Field(default=200_000_000, ge=0)
-    currency: Literal["USD"] = "USD"
+    currency: str = Field(default="USD", pattern=r"^[A-Z]{3}$")
     price_year: int = Field(default=2026, ge=2000, le=2100)
     locked_ids: list[str] = Field(default_factory=list)
     excluded_ids: list[str] = Field(default_factory=list)
@@ -129,6 +129,8 @@ class PrepareRequest(WireModel):
     grid_cells: int = Field(default=128, ge=32, le=512)
     source: Literal["auto", "terrarium", "usgs_1m"] = "auto"
     label: str = Field(default="Selected neighbourhood", max_length=160)
+    country_code: str | None = Field(default=None, pattern=r"^[A-Z]{2}$")
+    currency: str = Field(default="USD", pattern=r"^[A-Z]{3}$")
 
 
 class PlanningRequest(WireModel):

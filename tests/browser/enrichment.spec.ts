@@ -5,7 +5,7 @@ test('acquired rainfall evidence can be selected without a file round trip',asyn
  await page.route('**/api/v1/bundles/*/enrichment',route=>route.fulfill({json:[{
    id:'rainfall-fixture',status:'completed',results:{rainfall:{status:'available',note:'Fixture acquisition'}}}]}));
  await page.route('**/api/v1/enrichment/rainfall-fixture/rainfall',route=>route.fulfill({json:{survey:{kind:'rainfall',storm}}}));
- await page.goto('/');await expect(page.getByRole('button',{name:'Run storm'})).toBeEnabled({timeout:30000});
+ await page.goto('/?intro=0');await expect(page.getByRole('button',{name:'Run storm'})).toBeEnabled({timeout:30000});
  await page.getByRole('button',{name:'Data & assumptions'}).click();
  await page.getByRole('button',{name:'Use acquired rainfall event'}).click();
  await page.getByRole('button',{name:'Close',exact:true}).click();
@@ -46,7 +46,7 @@ test('rainfall survey can be imported and selected through the browser',async({p
   return route.fulfill({json:imported?[{id:'rain-import',kind:'rainfall',source:survey.source}]:[]});
  });
  await page.route('**/api/v1/imports/rain-import',route=>route.fulfill({json:survey}));
- await page.goto('/');await expect(page.getByRole('button',{name:'Run storm'})).toBeEnabled({timeout:30000});
+ await page.goto('/?intro=0');await expect(page.getByRole('button',{name:'Run storm'})).toBeEnabled({timeout:30000});
  await page.getByRole('button',{name:'Data & assumptions'}).click();
  await page.getByLabel('Import survey JSON').setInputFiles({name:'rain.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(survey))});
  await page.getByRole('button',{name:'Use rainfall event'}).click();

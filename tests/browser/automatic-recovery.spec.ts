@@ -1,6 +1,6 @@
 import {test,expect} from '@playwright/test';
 test('an active storm survives reload without pressing Stop',async({page})=>{
- await page.goto('/');
+ await page.goto('/?intro=0');
  await expect(page.getByRole('heading',{name:'Spring Garden, Philadelphia'})).toBeVisible({timeout:30000});
  await page.getByLabel('Duration',{exact:true}).selectOption('360');
  await page.getByRole('button',{name:'Run storm',exact:true}).click();

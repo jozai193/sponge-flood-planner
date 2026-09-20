@@ -3,6 +3,7 @@ import json
 import httpx
 import pytest
 
+from services.geodata.currency import currency_for_country
 from services.geodata.geocoding import search_places
 
 
@@ -20,7 +21,7 @@ def photon(name="Some apartments", lat=12, lon=77):
     return {
         "features": [
             {
-                "properties": {"name": name, "city": "Example city", "country": "India"},
+                "properties": {"name": name, "city": "Example city", "country": "India", "countrycode": "IN"},
                 "geometry": {"type": "Point", "coordinates": [lon, lat]},
             }
         ]
@@ -38,6 +39,7 @@ def test_fuzzy_candidates_survive_unrelated_exact_matches():
 
     result = search(fetcher)
     assert [r["latitude"] for r in result["locations"]] == [12, 45]
+    assert result["locations"][0]["currency"] == "INR"
     assert len(result["sources"]) == 2
 
 
@@ -81,6 +83,12 @@ def test_rate_limited_provider_is_not_called():
     result = search(fetcher, allow=lambda _: False)
     assert not result["locations"]
     assert len(result["warnings"]) == 2
+
+
+def test_current_country_currency_mapping_and_unknown_fallback():
+    assert currency_for_country("bg") == "EUR"
+    assert currency_for_country("US") == "USD"
+    assert currency_for_country("not-a-country") is None
 
 
 def test_region_is_forwarded_and_coordinate_coverage_is_separate(monkeypatch):

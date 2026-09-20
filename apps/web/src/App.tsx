@@ -53,6 +53,7 @@ import {
   compileDesign,
   type PhysicalDesign,
 } from "../../../packages/domain/interventions";
+import { normaliseCurrency } from "../../../packages/domain/currency";
 
 import Replay from "./Replay";
 
@@ -107,6 +108,9 @@ type Building = {
 type Bundle = {
   bundle_id: string;
   label: string;
+  country_code?: string | null;
+  currency?: string;
+  currency_source?: string;
   extent_m: number;
   grid: {
     elevation_origin_m?: number;
@@ -144,6 +148,7 @@ export default function App() {
   const [bundle, setBundle] = useState<Bundle | null>(null),
     [input, setInput] = useState<GPUInput | null>(null),
     [frame, setFrame] = useState<Frame | null>(null);
+  const currency = normaliseCurrency(bundle?.currency);
 
   const [importedStorm, setImportedStorm] = useState<any>(null);
   const [antecedentSaturation, setAntecedentSaturation] = useState(0.25);
@@ -775,6 +780,8 @@ export default function App() {
         extent_m: areaSize,
         grid_cells: gridSize,
         source: "auto",
+        country_code: location.country_code ?? undefined,
+        currency: normaliseCurrency(location.currency),
       });
 
       let result;
@@ -1154,6 +1161,7 @@ export default function App() {
       input: scenarioInput,
       designs,
       budgetMinor: Math.round(budget * 100),
+      currency,
       storm: forcing.storm,
       stormEnsemble:
         mode === "PLAN" && forcing.components.rainfall
@@ -1272,8 +1280,8 @@ export default function App() {
 
   return (
     <>
-    {launch.visible&&<LaunchExperience key={launch.run} exiting={launch.exiting} location={bundle?.label??'Spring Garden, Philadelphia'} onEnter={closeLaunch}/>}
-    <div className={`app ${launch.visible?'is-launching':''}`}>
+    {launch.visible&&<LaunchExperience key={launch.run} exiting={launch.exiting} location={bundle?.label??'Spring Garden, Philadelphia'} onEnter={closeLaunch} onTour={()=>{closeLaunch();window.setTimeout(()=>setShowJudgeTour(true),780);}}/>}
+    <div className={`app ${launch.visible?'is-launching':''}`} aria-hidden={launch.visible||undefined} inert={launch.visible||undefined}>
       <header>
         <div className="brand">
           <Droplets size={27} />
@@ -1353,6 +1361,7 @@ export default function App() {
               <small>
                 {l.latitude.toFixed(5)}, {l.longitude.toFixed(5)}
                 {l.provider ? " · " + l.provider : ""}
+                {l.currency ? " · costs in " + l.currency + (l.currency_source === "fallback" ? " (fallback)" : "") : ""}
               </small>
             </button>
             {l.terrain_supported === false && (
@@ -1674,7 +1683,7 @@ export default function App() {
             : "Water screening uses satellite classification, not a site survey."}
         </p>
         <label>
-          Budget (USD)
+          Budget ({currency})
           <input
             type="number"
             value={budget}
@@ -1687,6 +1696,10 @@ export default function App() {
             }}
           />
         </label>
+        <p className="note">{bundle?.currency_source === "fallback"
+          ? `A country currency could not be inferred, so ${currency} is the editable fallback.`
+          : `Costs use the selected location’s ${currency} currency.`} Values are
+          local planning assumptions; no exchange-rate conversion is applied.</p>
         <hr />
         <p className="note">
           Planner: physics search · no runtime AI service. Add eligible
@@ -1707,11 +1720,13 @@ export default function App() {
           Compare selected design
         </button>
         <DesignEditor
-          key={bundle?.bundle_id}
+          key={`${bundle?.bundle_id}-${currency}`}
           sites={planningSites}
           designs={designs}
           onChange={changeDesign}
           disabled={running || contextLoading}
+          budgetMinor={Math.round(budget * 100)}
+          currency={currency}
         />
       </aside>
 

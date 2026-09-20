@@ -7,7 +7,7 @@ import {PolygonLayer,PathLayer,LineLayer,ScatterplotLayer,TextLayer} from '@deck
 import type {GPUInput} from '../../../packages/simulation/src/gpu';
 export type CityContext={roads:{id:string;name:string;kind:string;path:number[][]}[];green:{id:string;name:string;geometry:{type:string;coordinates:any}}[];water?:{id:string;name:string;polygon:number[][]}[];landscape_status?:string;trees:{id:string;position:number[];basis?:string}[];assumptions:string[]};
 export type CityBuilding={id:string;geometry:{type:string;coordinates:any};height_m:number;base_elevation_m:number;exterior_cells:number[];
- first_floor_elevation_m?:number|null;structure_value_minor?:number|null;damage_curve?:{id:string;source:string;points:[number,number][]}|null};
+ first_floor_elevation_m?:number|null;structure_value_minor?:number|null;valuation_currency?:string|null;damage_curve?:{id:string;source:string;points:[number,number][]}|null};
 const system={coordinateSystem:COORDINATE_SYSTEM.CARTESIAN};
 export function cityLighting(shadows=true){const effect=new LightingEffect({ambient:new AmbientLight({color:[220,235,255],intensity:.75}),sun:new DirectionalLight({color:[255,239,207],intensity:1.35,direction:[-2,-3,-5],_shadow:shadows})});effect.shadowColor=[.07,.12,.15,.32];return effect;}
 export function cityGeometry(input:GPUInput,extent:number,buildings:CityBuilding[],context:CityContext|null,ground=terrainSurface(input)){

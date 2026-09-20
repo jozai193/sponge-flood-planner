@@ -30,6 +30,21 @@ test('scenario import rejects invalid obstacle values before Uint8 conversion ca
   expect(()=>unpackInput(packed)).toThrow('Invalid scenario value');
  }
 });
+test('report preserves a location currency in every cost export',async()=>{
+ const request=await fixture();
+ request.provenance={...request.provenance,currency:'INR'};
+ request.result={...request.result,evidence:{...request.result.evidence,currency:'INR'}};
+ const report=await buildReport(request);
+ expect(report.scenario.summary.currency).toBe('INR');
+ expect(report.scenario.evidence.currency).toBe('INR');
+ expect(report.html).toContain('INR');
+ expect(report.csv).toContain('currency,capital');
+});
+test('report rejects candidate costs declared in a different currency',async()=>{
+ const request=await fixture();
+ request.result={...request.result,evidence:{...request.result.evidence,currency:'USD',candidateDesigns:[{id:'mixed',kind:'rain_garden',cells:[0],eligibility:'user_assumed',excavationM:0,storageDepthM:0,conductivityMS:0,percolationMS:0,roughness:0,costMinor:0,parameterSource:'fixture',costBreakdown:{sitePreparationMinor:0,materialsMinor:0,installationMinor:0,contingencyMinor:0,annualMaintenanceMinor:0,currency:'INR',priceYear:2026,basis:'fixture'}}]}};
+ await expect(buildReport(request)).rejects.toThrow('currency');
+});
 
 test('report rejects nonfinite scores instead of silently passing reconciliation',async()=>{
  const r=await fixture();

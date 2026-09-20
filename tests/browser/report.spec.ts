@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 import {mkdir,writeFile} from 'node:fs/promises';
 test('completed simulated comparison exports a reproducible report and safe readable HTML',async({page})=>{
- await page.goto('/');const report=await page.evaluate(async()=>{
+ await page.goto('/?intro=0');const report=await page.evaluate(async()=>{
   const path='/src/testing/gpu-harness.ts';const {simulate,buildReport,inputIdentity,unpackInput,evidenceFiles}=await import(path);
   const n=16,input={nx:4,ny:4,dx:1,dy:1,z:new Float32Array(n),solid:new Uint8Array(n),rainWeights:new Float32Array(n).fill(1),roughness:new Float32Array(n),capacity:new Float32Array(n),infiltration:new Float32Array(n),maxStepS:10,spatialOrder:2};
   const storm={duration:1,recession:1,depth:.2},frames:any[]=[];
@@ -75,7 +75,7 @@ test('completed simulated comparison exports a reproducible report and safe read
 
 
 test('report accepts evaluated intervention physics and rejects altered excavation',async({page})=>{
- await page.goto('/');const result=await page.evaluate(async()=>{
+ await page.goto('/?intro=0');const result=await page.evaluate(async()=>{
   const path='/src/testing/gpu-harness.ts';const {simulate,buildReport,inputIdentity,compileDesign}=await import(path);
   const input={nx:4,ny:4,dx:5,dy:5,z:new Float32Array(16),solid:new Uint8Array(16),rainWeights:new Float32Array(16).fill(1),roughness:new Float32Array(16).fill(.03),capacity:new Float32Array(16),infiltration:new Float32Array(16),maxStepS:10};
   const design={id:'garden',kind:'rain_garden',cells:[0],eligibility:'user_assumed',excavationM:.1,storageDepthM:.1,conductivityMS:.00001,percolationMS:0,roughness:.05,costMinor:10000,parameterSource:'controlled test'};
@@ -95,7 +95,7 @@ test('report accepts evaluated intervention physics and rejects altered excavati
 
 
 test('coastal comparison retains boundary levels, datum and water exclusions through save and export',async({page})=>{
- await page.goto('/');const result=await page.evaluate(async()=>{
+ await page.goto('/?intro=0');const result=await page.evaluate(async()=>{
   const harness='/src/testing/gpu-harness.ts',scenarioPath='/src/scenario-input.ts',storagePath='/src/completed-comparison.ts';
   const {simulate,buildReport,inputIdentity,unpackInput}=await import(harness),{scenarioInput}=await import(scenarioPath),storage=await import(storagePath);
   const base={nx:4,ny:4,dx:1,dy:1,z:new Float32Array(16),solid:new Uint8Array(16),rainWeights:new Float32Array(16),roughness:new Float32Array(16).fill(.03),capacity:new Float32Array(16),infiltration:new Float32Array(16),maxStepS:.05,spatialOrder:2};

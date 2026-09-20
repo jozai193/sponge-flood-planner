@@ -13,7 +13,7 @@ test('loads a sourced 100-year NOAA storm with explicit wetness and uncertainty'
    annual_exceedance_probability:.01,estimate_mm:80,confidence_interval:{level:.9,lower_mm:72,upper_mm:88},
    spatial_support:'Point estimate; not an areal rainfall field.',temporal_distribution_source:'SPONGE pattern; NOAA supplies the total depth.'}
  }}));
- await page.goto('/');
+ await page.goto('/?intro=0');
  await expect(page.getByRole('heading',{name:'Spring Garden, Philadelphia'})).toBeVisible({timeout:60000});
  await page.getByRole('button',{name:'2D plan view'}).click();
  await expect(page.locator('.maplabel')).toContainText('TOP-DOWN 2D PLAN');

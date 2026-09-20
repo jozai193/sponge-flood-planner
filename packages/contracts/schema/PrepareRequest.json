@@ -42,6 +42,25 @@
       "maxLength": 160,
       "title": "Label",
       "type": "string"
+    },
+    "country_code": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Z]{2}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Country Code"
+    },
+    "currency": {
+      "default": "USD",
+      "pattern": "^[A-Z]{3}$",
+      "title": "Currency",
+      "type": "string"
     }
   },
   "required": [

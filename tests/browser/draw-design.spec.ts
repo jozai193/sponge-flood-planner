@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 
 test('user can draw, edit, lock and delete an eligible candidate footprint',async({page})=>{
- await page.goto('/');
+ await page.goto('/?intro=0');
  await expect(page.getByRole('button',{name:'Run storm',exact:true})).toBeEnabled({timeout:30000});
  await page.getByRole('button',{name:'Draw candidate',exact:true}).click();
  await page.getByRole('button',{name:'Place candidate near map centre',exact:true}).click();

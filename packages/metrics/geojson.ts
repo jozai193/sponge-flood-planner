@@ -1,9 +1,10 @@
 import proj4 from 'proj4';
 import type {GPUInput} from '../simulation/src/gpu';
 import {compileDesign,type PhysicalDesign} from '../domain/interventions';
+import {normaliseCurrency} from '../domain/currency';
 export interface ExportGrid {nx:number;ny:number;dx_m:number;dy_m:number;origin_x_m:number;origin_y_m:number;crs:string;row_direction:string}
 /** One polygon per simulated cell; installation costs occur once in the design catalogue. */
-export function selectedGeoJSON(input:GPUInput,designs:PhysicalDesign[],grid:ExportGrid,budgetMinor:number){
+export function selectedGeoJSON(input:GPUInput,designs:PhysicalDesign[],grid:ExportGrid,budgetMinor:number,currency?:string){
  if(!grid||grid.nx!==input.nx||grid.ny!==input.ny||grid.dx_m!==input.dx||grid.dy_m!==input.dy||grid.row_direction!=='north'||![grid.origin_x_m,grid.origin_y_m].every(Number.isFinite))throw new Error('Export grid does not match the simulation');
  if(!/^EPSG:32[67](0[1-9]|[1-5][0-9]|60)$/.test(grid.crs))throw new Error('GeoJSON export requires a supported WGS84 UTM grid');
  compileDesign(input,designs,budgetMinor);
@@ -15,5 +16,6 @@ export function selectedGeoJSON(input:GPUInput,designs:PhysicalDesign[],grid:Exp
   if(ring.some((p,i)=>i>0&&Math.abs(p[0]-ring[i-1][0])>180))throw new Error('Antimeridian-crossing exports require polygon splitting');
   return {type:'Feature' as const,id:design.id+':'+cell,geometry:{type:'Polygon' as const,coordinates:[ring]},properties:{design_id:design.id,kind:design.kind,cell_index:cell,model_area_m2:input.dx*input.dy,eligibility:design.eligibility,parameter_source:design.parameterSource}};
  }));
- return {type:'FeatureCollection' as const,features,designs:designs.map(d=>({...d,currency:'USD',cost_basis:'assumed installation cost'})),source_grid:grid,note:'WGS84 longitude/latitude. Polygons are simulated intervention cells, not surveyed construction boundaries. Installation cost is recorded once per design in the designs catalogue; do not multiply it by cell count.'};
+ const currencyCode=normaliseCurrency(currency??designs.find(d=>d.costBreakdown)?.costBreakdown?.currency);
+ return {type:'FeatureCollection' as const,features,designs:designs.map(d=>({...d,currency:d.costBreakdown?.currency??currencyCode,cost_basis:d.costBreakdown?.basis??'assumed installation cost'})),source_grid:grid,note:'WGS84 longitude/latitude. Polygons are simulated intervention cells, not surveyed construction boundaries. Installation cost is recorded once per design in the designs catalogue; do not multiply it by cell count.'};
 }

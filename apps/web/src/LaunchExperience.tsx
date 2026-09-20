@@ -1,10 +1,11 @@
-import {ArrowRight, CloudRain, Droplets, Leaf} from 'lucide-react';
+import {ArrowRight, CloudRain, Droplets, Leaf, Play, ShieldCheck, Sparkles} from 'lucide-react';
 import type {PointerEvent} from 'react';
 
 type Props={
   exiting:boolean;
   location:string;
   onEnter:()=>void;
+  onTour:()=>void;
 };
 
 const blocks=[
@@ -14,7 +15,7 @@ const blocks=[
   [740,646,146,68],[930,636,104,52],[1084,660,154,72],
 ] as const;
 
-export default function LaunchExperience({exiting,location,onEnter}:Props){
+export default function LaunchExperience({exiting,location,onEnter,onTour}:Props){
   function move(event:PointerEvent<HTMLElement>){
     const box=event.currentTarget.getBoundingClientRect();
     event.currentTarget.style.setProperty('--launch-x',`${((event.clientX-box.left)/box.width-.5)*2}`);
@@ -24,6 +25,8 @@ export default function LaunchExperience({exiting,location,onEnter}:Props){
   return <section
     className={`launch-experience ${exiting?'is-exiting':''}`}
     aria-label="SPONGE stormwater model introduction"
+    role="dialog"
+    aria-modal="true"
     onPointerMove={move}
     onPointerLeave={event=>{event.currentTarget.style.setProperty('--launch-x','0');event.currentTarget.style.setProperty('--launch-y','0');}}
   >
@@ -31,6 +34,11 @@ export default function LaunchExperience({exiting,location,onEnter}:Props){
     <div className="launch-aurora launch-aurora-one" aria-hidden="true"/>
     <div className="launch-aurora launch-aurora-two" aria-hidden="true"/>
     <div className="launch-rain" aria-hidden="true">{Array.from({length:42},(_,index)=><i key={index} style={{left:`${(index*29)%103}%`,animationDelay:`-${(index%13)*.19}s`,animationDuration:`${.82+(index%6)*.13}s`}}/>)}</div>
+
+    <div className="launch-topbar">
+      <div className="launch-brand"><Droplets size={27}/><span>SPONGE</span><small>NEIGHBOURHOOD STORMWATER LAB</small></div>
+      <div className="launch-runtime"><i/><span>Browser physics</span><b>No runtime AI</b></div>
+    </div>
 
     <svg className="launch-world" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
@@ -68,16 +76,29 @@ export default function LaunchExperience({exiting,location,onEnter}:Props){
       <g className="launch-ripple">
         <circle cx="885" cy="545" r="34"/><circle cx="885" cy="545" r="78"/><circle cx="885" cy="545" r="128"/>
       </g>
+      <g className="launch-scanline">
+        <path d="M548 762C761 648 884 589 1030 491s261-151 410-193"/>
+      </g>
     </svg>
 
     <div className="launch-copy">
-      <div className="launch-brand"><Droplets size={27}/><span>SPONGE</span><small>NEIGHBOURHOOD STORMWATER LAB</small></div>
       <div className="launch-location"><span/><b>{location}</b></div>
+      <div className="launch-kicker"><Sparkles size={14}/> From rainfall to a defensible plan</div>
       <h1>See the storm.<br/><em>Shape the response.</em></h1>
-      <p>Run street-scale flood physics, place green infrastructure, and compare what changes—before concrete is poured.</p>
-      <button type="button" onClick={onEnter}>Enter the live model <ArrowRight size={18}/></button>
+      <p>Run street-scale flood physics, place green infrastructure, and compare what changes—before concrete is poured. Every result stays tied to its inputs, assumptions, and local planning currency.</p>
+      <div className="launch-actions">
+        <button className="launch-primary" type="button" autoFocus onClick={onEnter}>Enter the live model <ArrowRight size={18}/></button>
+        <button className="launch-secondary" type="button" onClick={onTour}><Play size={16}/> Take the guided tour</button>
+      </div>
       <small className="launch-boundary">Atmospheric opening only. Evidence and simulation values begin inside the model.</small>
     </div>
+
+    <aside className="launch-proof" aria-label="SPONGE workflow">
+      <div className="launch-proof-heading"><ShieldCheck size={17}/><span>Decision trail</span><b>Reproducible</b></div>
+      <article><span>01</span><div><b>Prepare</b><small>Terrain + footprints</small></div></article>
+      <article><span>02</span><div><b>Simulate</b><small>Same storm, paired runs</small></div></article>
+      <article><span>03</span><div><b>Explain</b><small>Evidence-ready exports</small></div></article>
+    </aside>
 
     <div className="launch-stages" aria-hidden="true">
       <div className="launch-stage"><CloudRain size={16}/><span>01</span><b>Rainfall</b></div>

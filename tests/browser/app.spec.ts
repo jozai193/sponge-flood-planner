@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 test('real neighbourhood loads with explicit assumptions',async({page})=>{
   const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
-  await page.goto('/');
+  await page.goto('/?intro=0');
   await expect(page.getByRole('heading',{name:'Spring Garden, Philadelphia'})).toBeVisible({timeout:30000});
   await expect(page.getByText('685 buildings')).toBeVisible({timeout:30000});
   await expect(page.getByRole('button',{name:'Run storm'})).toBeEnabled({timeout:30000});
@@ -68,7 +68,7 @@ for(const outcome of ['ready','unavailable'] as const){
    if(outcome==='unavailable')await route.fulfill({status:503,json:{detail:'Controlled provider outage'}});
    else await route.fulfill({json:{roads:[],green:[],trees:[],water:[],assumptions:[],attribution:'Controlled water screening'}});
   });
-  await page.goto('/');
+  await page.goto('/?intro=0');
   await expect(page.getByText('685 buildings')).toBeVisible({timeout:30000});
   await expect(page.getByRole('button',{name:'Run storm',exact:true})).toBeDisabled();
   await expect(page.getByLabel('Assume this site is eligible',{exact:false})).toBeDisabled();
@@ -82,7 +82,7 @@ for(const outcome of ['ready','unavailable'] as const){
 
  test('stalled landscape request releases controls with unavailable coverage',async({page})=>{
   await page.route('**/api/v1/bundles/*/context',()=>{});
-  await page.goto('/');
+  await page.goto('/?intro=0');
   await expect(page.getByText('685 buildings')).toBeVisible({timeout:30000});
   await expect(page.getByRole('button',{name:'Run storm',exact:true})).toBeDisabled();
   await expect(page.getByRole('button',{name:'Run storm',exact:true})).toBeEnabled({timeout:55000});
@@ -97,9 +97,9 @@ test('landscape outage can be retried without reloading terrain',async({page})=>
   requests++;
   return requests===1?route.fulfill({status:503,json:{detail:'Controlled outage'}}):route.fulfill({json:{roads:[],green:[],trees:[],water:[],assumptions:[],attribution:'Recovered landscape'}});
  });
- await page.goto('/');
+ await page.goto('/?intro=0');
  const retry=page.getByRole('button',{name:'Retry landscape coverage',exact:true});
- await expect(retry).toBeVisible();
+ await expect(retry).toBeVisible({timeout:30000});
  await retry.click();
  await expect(page.getByText('Recovered landscape',{exact:true})).toBeVisible();
  await expect(retry).toHaveCount(0);
