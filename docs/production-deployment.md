@@ -17,13 +17,13 @@ Use a long random database password. Do not commit it to `.env` or source contro
 
 ```powershell
 $env:SPONGE_DB_PASSWORD = '<long-random-password>'
-$env:SPONGE_TRUSTED_HOSTS = 'sponge.example.org'
+$env:SPONGE_TRUSTED_HOSTS = 'sponge.example.org,localhost,127.0.0.1'
 $env:SPONGE_ALLOWED_ORIGINS = 'https://sponge.example.org'
 $env:SPONGE_TRUSTED_PROXY_CIDRS = '127.0.0.1/32'
 docker compose -f infra/compose/compose.production.yaml up --build -d --wait
 ```
 
-The compose file publishes `127.0.0.1:8080` by default. Terminate TLS at a reverse proxy and forward to that address. Forward the original `Host` and append (do not replace) `X-Forwarded-For`. Add the public hostname to `SPONGE_TRUSTED_HOSTS` and set `SPONGE_TRUSTED_PROXY_CIDRS` to only the proxy address or network as seen by the API. Uvicorn's generic proxy-header rewriting is disabled; the application ignores forwarding headers from every other peer. `infra/nginx/sponge.conf.example` is a starting configuration and includes the matching 102 MB outer body limit. Same-origin hosting needs no CORS origin; list only explicit HTTPS origins when a separate frontend is intentional.
+The compose file publishes `127.0.0.1:8080` by default. Terminate TLS at a reverse proxy and forward to that address. Forward the original `Host` and append (do not replace) `X-Forwarded-For`. Add the public hostname plus `localhost,127.0.0.1` to `SPONGE_TRUSTED_HOSTS`; the loopback entries are required by the container health check. Set `SPONGE_TRUSTED_PROXY_CIDRS` to only the proxy address or network as seen by the API. Uvicorn's generic proxy-header rewriting is disabled; the application ignores forwarding headers from every other peer. `infra/nginx/sponge.conf.example` is a starting configuration and includes the matching 102 MB outer body limit. Same-origin hosting needs no CORS origin; list only explicit HTTPS origins when a separate frontend is intentional.
 
 The ASGI layer rejects oversized bodies while they stream, before FastAPI parses or spools multipart data. Ordinary API bodies are capped at 25 MB, survey imports at 10.1 MB including transport overhead, and terrain requests at 102 MB with a second 100 MB file-content check.
 
